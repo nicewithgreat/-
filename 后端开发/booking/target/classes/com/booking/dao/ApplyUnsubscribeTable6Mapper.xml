@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booking.dao.ApplyUnsubscribeTable6Mapper">
+  <resultMap id="BaseResultMap" type="com.booking.pojo.ApplyUnsubscribeTable6">
+    <result column="unsubscribe_id" jdbcType="INTEGER" property="unsubscribeId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="book_id" jdbcType="INTEGER" property="bookId" />
+    <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="unsubscribe_state" jdbcType="INTEGER" property="unsubscribeState" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    unsubscribe_id, user_id, book_id, apply_time, reason, unsubscribe_state
+  </sql>
+  <select id="selectByExample" parameterType="com.booking.pojo.ApplyUnsubscribeTable6Example" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from apply_unsubscribe_table_6
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.booking.pojo.ApplyUnsubscribeTable6Example">
+    delete from apply_unsubscribe_table_6
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.booking.pojo.ApplyUnsubscribeTable6">
+    insert into apply_unsubscribe_table_6 (unsubscribe_id, user_id, book_id, 
+      apply_time, reason, unsubscribe_state
+      )
+    values (#{unsubscribeId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, 
+      #{applyTime,jdbcType=TIMESTAMP}, #{reason,jdbcType=VARCHAR}, #{unsubscribeState,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.booking.pojo.ApplyUnsubscribeTable6">
+    insert into apply_unsubscribe_table_6
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="unsubscribeId != null">
+        unsubscribe_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="bookId != null">
+        book_id,
+      </if>
+      <if test="applyTime != null">
+        apply_time,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="unsubscribeState != null">
+        unsubscribe_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="unsubscribeId != null">
+        #{unsubscribeId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null">
+        #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="applyTime != null">
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="unsubscribeState != null">
+        #{unsubscribeState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.booking.pojo.ApplyUnsubscribeTable6Example" resultType="java.lang.Long">
+    select count(*) from apply_unsubscribe_table_6
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update apply_unsubscribe_table_6
+    <set>
+      <if test="record.unsubscribeId != null">
+        unsubscribe_id = #{record.unsubscribeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookId != null">
+        book_id = #{record.bookId,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyTime != null">
+        apply_time = #{record.applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reason != null">
+        reason = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unsubscribeState != null">
+        unsubscribe_state = #{record.unsubscribeState,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update apply_unsubscribe_table_6
+    set unsubscribe_id = #{record.unsubscribeId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      book_id = #{record.bookId,jdbcType=INTEGER},
+      apply_time = #{record.applyTime,jdbcType=TIMESTAMP},
+      reason = #{record.reason,jdbcType=VARCHAR},
+      unsubscribe_state = #{record.unsubscribeState,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
