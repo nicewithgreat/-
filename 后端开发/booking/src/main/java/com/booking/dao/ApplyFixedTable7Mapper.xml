@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.booking.dao.ApplyFixedTable7Mapper">
+  <resultMap id="BaseResultMap" type="com.booking.pojo.ApplyFixedTable7">
+    <result column="apply_fixed_id" jdbcType="INTEGER" property="applyFixedId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="apply_time" jdbcType="TIMESTAMP" property="applyTime" />
+    <result column="time_id" jdbcType="INTEGER" property="timeId" />
+    <result column="day_of_week" jdbcType="INTEGER" property="dayOfWeek" />
+    <result column="apply_state" jdbcType="INTEGER" property="applyState" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    apply_fixed_id, user_id, apply_time, time_id, day_of_week, apply_state
+  </sql>
+  <select id="selectByExample" parameterType="com.booking.pojo.ApplyFixedTable7Example" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from apply_fixed_table_7
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.booking.pojo.ApplyFixedTable7Example">
+    delete from apply_fixed_table_7
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.booking.pojo.ApplyFixedTable7">
+    insert into apply_fixed_table_7 (apply_fixed_id, user_id, apply_time, 
+      time_id, day_of_week, apply_state
+      )
+    values (#{applyFixedId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{applyTime,jdbcType=TIMESTAMP}, 
+      #{timeId,jdbcType=INTEGER}, #{dayOfWeek,jdbcType=INTEGER}, #{applyState,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.booking.pojo.ApplyFixedTable7">
+    insert into apply_fixed_table_7
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="applyFixedId != null">
+        apply_fixed_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="applyTime != null">
+        apply_time,
+      </if>
+      <if test="timeId != null">
+        time_id,
+      </if>
+      <if test="dayOfWeek != null">
+        day_of_week,
+      </if>
+      <if test="applyState != null">
+        apply_state,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="applyFixedId != null">
+        #{applyFixedId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="applyTime != null">
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timeId != null">
+        #{timeId,jdbcType=INTEGER},
+      </if>
+      <if test="dayOfWeek != null">
+        #{dayOfWeek,jdbcType=INTEGER},
+      </if>
+      <if test="applyState != null">
+        #{applyState,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.booking.pojo.ApplyFixedTable7Example" resultType="java.lang.Long">
+    select count(*) from apply_fixed_table_7
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update apply_fixed_table_7
+    <set>
+      <if test="record.applyFixedId != null">
+        apply_fixed_id = #{record.applyFixedId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyTime != null">
+        apply_time = #{record.applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.timeId != null">
+        time_id = #{record.timeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dayOfWeek != null">
+        day_of_week = #{record.dayOfWeek,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyState != null">
+        apply_state = #{record.applyState,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update apply_fixed_table_7
+    set apply_fixed_id = #{record.applyFixedId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      apply_time = #{record.applyTime,jdbcType=TIMESTAMP},
+      time_id = #{record.timeId,jdbcType=INTEGER},
+      day_of_week = #{record.dayOfWeek,jdbcType=INTEGER},
+      apply_state = #{record.applyState,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>
