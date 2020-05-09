@@ -19,4 +19,8 @@ public interface TodayCourtTable5Mapper {
     int updateByExampleSelective(@Param("record") TodayCourtTable5 record, @Param("example") TodayCourtTable5Example example);
 
     int updateByExample(@Param("record") TodayCourtTable5 record, @Param("example") TodayCourtTable5Example example);
+    
+    //暂定连表查询，后续可能将部分表，从启动服务器就读取为静态类；
+    List<TodayCourtTable5> selectByExampleWith(TodayCourtTable5Example example);
+
 }

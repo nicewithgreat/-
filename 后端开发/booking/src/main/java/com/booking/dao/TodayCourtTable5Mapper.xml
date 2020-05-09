@@ -7,6 +7,23 @@
     <result column="time_id" jdbcType="INTEGER" property="timeId" />
     <result column="court_state" jdbcType="INTEGER" property="courtState" />
   </resultMap>
+  
+  <!-- WithResultMap -->
+  <resultMap id="WithResultMap" type="com.booking.pojo.TodayCourtTable5">
+    <result column="today_court_id" jdbcType="INTEGER" property="todayCourtId" />
+    <result column="court_id" jdbcType="INTEGER" property="courtId" />
+    <result column="time_id" jdbcType="INTEGER" property="timeId" />
+    <result column="court_state" jdbcType="INTEGER" property="courtState" />
+    <association property="courtTable0" javaType="com.booking.pojo.CourtTable0">
+    	<result column="court_material" property="courtMaterial"/>
+    </association>
+    <association property="scheduledTimeTable1" javaType="com.booking.pojo.ScheduledTimeTable1">
+    	<result column="starttime" property="starttime"/>
+    	<result column="endtime" property="endtime"/>
+    </association>
+  </resultMap>  
+  <!-- WithResultMap -->
+  
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -68,6 +85,31 @@
   <sql id="Base_Column_List">
     today_court_id, court_id, time_id, court_state
   </sql>
+  
+  
+  <!--自定义方法 List<TodayCourtTable5> selectByExampleWith(TodayCourtTable5Example example); -->
+   <sql id="With_Column_List">
+    t5.today_court_id, t5.court_id, t5.time_id, t5.court_state, t0.court_material, t1.starttime, t1.endtime
+  </sql>
+  <select id="selectByExampleWith" parameterType="com.booking.pojo.TodayCourtTable5Example" resultMap="WithResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="With_Column_List" />
+    from today_court_table_5 t5
+	left join court_table_0 t0 on t5.court_id = t0.court_id
+	left join scheduled_time_table_1 t1 on t5.time_id = t1.time_id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>  
+  <!-- selectByExampleWith function endl -->
+  
+  
   <select id="selectByExample" parameterType="com.booking.pojo.TodayCourtTable5Example" resultMap="BaseResultMap">
     select
     <if test="distinct">
