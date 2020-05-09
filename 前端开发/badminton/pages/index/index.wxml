@@ -1,0 +1,45 @@
+<form bindsubmit="formSubmit" report-submit>
+  <view class="content">
+    <view class="content-info-list">
+      <view class="list-title">塑胶场地</view>
+        <view class="list-inner">
+          <view class="list-item">
+            <image src="/images/court.png" />
+              <view>一号场</view>
+          </view>
+          <view class="list-item">
+            <image src="/images/court.png" />
+              <view>二号场</view>
+          </view>
+          <view class="list-item">
+            <image src="/images/court.png" />
+              <view>三号场</view>
+          </view>
+          <view class="list-item">
+            <image src="/images/court.png" />
+              <view>四号场</view>
+          </view>
+        </view>
+      <view class="list-title">水泥场地</view>
+        <view class="list-inner">
+          <view class="list-item">
+            <image src="/images/court.png" />
+              <view>五号场</view>
+          </view>
+          <view class="list-item">
+            <image src="/images/court.png" />
+              <view>六号场</view>
+          </view>
+          <view class="list-item">
+            <image src="/images/court.png" />
+              <view>七号场</view>
+          </view>
+          <view class="list-item">
+            <image src="/images/court.png" />
+              <view>八号场</view>
+          </view>
+        </view>
+    </view>
+    <button form-type="submit">预订</button>
+  </view>
+</form>

@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/information/information"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "color": "#ccc",
+    "selectedColor": "#ff4c91",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/badminton.jpg",
+        "selectedIconPath": "images/badminton.jpg",
+        "text": "订场"
+      },
+      {
+        "pagePath": "pages/information/information",
+        "iconPath": "images/me.jpg",
+        "selectedIconPath": "images/me.jpg",
+        "text": "我"
+      }
+    ]
+
+  },
+  "requiredBackgroundModes":[
+    "audio"
+  ],
+  "plugins":{
+    "tencentvideo":{
+      "version":"1.3.12",
+      "provider":"wxa75efa648b60994b"
+    }  
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+
+}
