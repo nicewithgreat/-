@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/login/login",
+    "pages/wxlogin/wxlogin",
     "pages/index/index",
     "pages/information/information"
   ],
@@ -26,14 +28,14 @@
         "iconPath": "images/me.jpg",
         "selectedIconPath": "images/me.jpg",
         "text": "我"
-      }
+      }   
     ]
 
   },
   "requiredBackgroundModes":[
     "audio"
   ],
-  
+
   "style": "v2",
   "sitemapLocation": "sitemap.json"
 
