@@ -13,9 +13,11 @@ Page({
                       success: function (res) {
                           //从数据库获取用户信息
                           that.queryUsreInfo();
+                          //console.log(that.queryUsreInfo().res.data)
                           //用户已经授权过
                           wx.switchTab({
-                              url: '/pages/index/index'
+                              url: '/pages/index/index',
+                              
                           })
                       }
                   });
@@ -29,21 +31,22 @@ Page({
           var that = this;
           //插入登录的用户的相关信息到数据库
           wx.request({
-              url: getApp().globalData.urlPath + 'hstc_interface/insert_user',
+              url: 'http://127.0.0.1:8080/booking/addUser',
               data: {
-                  openid: getApp().globalData.openid,
-                  nickName: e.detail.userInfo.nickName,
-                  avatarUrl: e.detail.userInfo.avatarUrl,
-                  province:e.detail.userInfo.province,
-                  city: e.detail.userInfo.city
+                  //openid: getApp().globalData.openid,
+                  wechatNO: e.detail.userInfo.nickName,
+                  //avatarUrl: e.detail.userInfo.avatarUrl,
+                  //province:e.detail.userInfo.province,
+                  //city: e.detail.userInfo.city
               },
               header: {
                   'content-type': 'application/json'
               },
               success: function (res) {
                   //从数据库获取用户信息
-                  that.queryUsreInfo();
+                  that.queryUsreInfo(e.detail.userInfo.nickName);
                   console.log("插入小程序登录用户信息成功！");
+                  console.log(res.data);
               }
           });
           //授权成功后，跳转进入小程序首页
@@ -68,9 +71,10 @@ Page({
   //获取用户信息接口
   queryUsreInfo: function () {
       wx.request({
-          url: getApp().globalData.urlPath + 'hstc_interface/queryByOpenid',
+          url: 'http://127.0.0.1:8080/booking/getMyInfo',
           data: {
-              openid: getApp().globalData.openid
+            user_id:'4',
+            wechatNO: 'HL'
           },
           header: {
               'content-type': 'application/json'
