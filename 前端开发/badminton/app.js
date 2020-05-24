@@ -33,7 +33,11 @@ App({
       }
     })
   },
+  
   globalData: {
-    userInfo: null
+    userInfo: null,
+    wechatNO:null,
+    avatarUrl:null
   }
+
 })

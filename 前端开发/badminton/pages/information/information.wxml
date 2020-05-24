@@ -1,20 +1,53 @@
 <!--index.wxml-->
 <view class="container">
+  <view class="login-icon">
+    <image class="login-img" src="/images/loginLog.jpg"></image>
+    <view class='userContent'>
+      <text class="userinfo-nickname">{{wechatNO}}</text>
+      <image  class="userinfo-avatar" src="{{avatarUrl}}" ></image>
+        
+    </view>   
+  </view>
+  <!--
   <view class="userinfo">
     <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
     <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      <image  class="userinfo-avatar" src="{{avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{wechatNO}}</text>
     </block>
   </view>
   <view class="usermotto">
     <text class="user-motto">{{motto}}</text>
-  </view>
-</view>
-<!-- 背景图片 -->
-<image class="bg" src="/images/court.png" />
-<!-- 内容区域 -->
-<view class="content">
-  <!-- 标题 -->
-  <view class="content-title">韩师羽毛球订场</view>
+  </view>  
+  -->
+  <view class="login-from">
+    
+    <!--账号-->
+    <view class="inputView">
+      <image class="nameImage" src="/images/name.png"></image>
+      <label class="loginLab">历史订场信息</label>
+     
+    </view>
+    <view class="line"></view>
+
+    <!--密码-->
+    <view class="inputView">
+      <image class="keyImage" src="/images/key.png"></image>
+      <label class="loginLab">个人信息</label>
+    </view>
+    <view class="line"></view>
+
+    <view class="inputView">
+      <image class="keyImage" src="/images/key.png"></image>
+      <label class="loginLab">用户申请</label>    
+    </view>
+    <view class="line"></view>
+
+    <view class="inputView">
+      <image class="keyImage" src="/images/key.png"></image>
+      <label class="loginLab">审核信息</label>     
+    </view>
+    <view class="line"></view>
+
+    </view>
 </view>

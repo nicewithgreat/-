@@ -1,12 +1,17 @@
+
+var app = getApp()
+
 Page({
   data: {
       //判断小程序的API，回调，参数，组件等是否在当前版本可用。
-      canIUse: wx.canIUse('button.open-type.getUserInfo')
+      canIUse: wx.canIUse('button.open-type.getUserInfo'),
+      wechatNO:'',
+      avatarUrl:''
   },
   onLoad: function () {
       var that = this;
       // 查看是否授权
-      wx.getSetting({
+      /*wx.getSetting({
           success: function (res) {
               if (res.authSetting['scope.userInfo']) {
                   wx.getUserInfo({
@@ -23,7 +28,7 @@ Page({
                   });
               }
           }
-      })
+      })*/
   },
   bindGetUserInfo: function (e) {
       if (e.detail.userInfo) {
@@ -47,11 +52,18 @@ Page({
                   that.queryUsreInfo(e.detail.userInfo.nickName);
                   console.log("插入小程序登录用户信息成功！");
                   console.log(res.data);
+                  app.globalData.wechatNO = e.detail.userInfo.nickName;
+                  app.globalData.avatarUrl = e.detail.userInfo.avatarUrl
               }
           });
+          that.setData({
+            wechatNO:e.detail.userInfo.nickName,
+            avatarUrl: e.detail.userInfo.avatarUrl
+           });
+          
           //授权成功后，跳转进入小程序首页
           wx.switchTab({
-              url: '/pages/index/index'  
+              url: '/pages/index/index'
           })
       } else {
           //用户按了拒绝按钮
@@ -73,7 +85,7 @@ Page({
       wx.request({
           url: 'http://127.0.0.1:8080/booking/getMyInfo',
           data: {
-            user_id:'4',
+            user_id:'5',
             wechatNO: 'HL'
           },
           header: {
