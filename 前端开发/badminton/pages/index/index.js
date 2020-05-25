@@ -4,51 +4,72 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {},
-    hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    interval: null,
+    text: '      每日订场于中午12:00开始，场地时间段为17:30-19：30以及19:30-22:00,请根据具体情况订场，每日每人限订一个场地，谢谢支持',
+    pace: 1.2, //滚动速度
+    interval: 20, //时间间隔
+    size: 15, //字体大小in px
+    length: 0, //字体宽度
+    offsetLeft: 0, //
+    windowWidth: 0,
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
+  //根据viewId查询view的宽度
+  queryViewWidth: function(viewId) {
+    //创建节点选择器
+    return new Promise(function(resolve) {
+      var query = wx.createSelectorQuery();
+      var that = this;
+      query.select('.' + viewId).boundingClientRect(function(rect) {
+        resolve(rect.width);
+      }).exec();
+    });
+
   },
-  onLoad: function () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse){
-      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
-      }
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
+  //停止跑马灯
+  stopMarquee: function() {
+    var that = this;
+    //清除旧的定时器
+    if (that.data != null) {
+      clearInterval(that.interval);
     }
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  }
+  //执行跑马灯动画
+  excuseAnimation: function() {
+    var that = this;
+    if (that.data.length > that.data.windowWidth) {
+      //设置循环
+      let interval = setInterval(function() {
+        if (that.data.offsetLeft <= 0) {
+          if (that.data.offsetLeft >= -that.data.length) {
+            that.setData({
+              offsetLeft: that.data.offsetLeft - that.data.pace,
+            })
+          } else {
+            that.setData({
+              offsetLeft: that.data.windowWidth,
+            })
+          }
+        } else {
+          that.setData({
+            offsetLeft: that.data.offsetLeft - that.data.pace,
+          })
+        }
+      }, that.data.interval);
+    }
+  },
+  //开始跑马灯
+  startMarquee: function() {
+    var that = this;
+    that.stopMarquee();
+    //初始化数据
+    that.data.windowWidth = wx.getSystemInfoSync().windowWidth;
+    that.queryViewWidth('text').then(function(resolve) {
+      that.data.length = resolve;
+      console.log(that.data.length + "/" + that.data.windowWidth);
+      that.excuseAnimation();
+    });
+  },
+  onShow: function() {
+    this.startMarquee();
+  },
 })

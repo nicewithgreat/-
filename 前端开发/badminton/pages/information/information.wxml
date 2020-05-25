@@ -1,12 +1,20 @@
 <!--index.wxml-->
 <view class="container">
+<!--微信头像和昵称-->
   <view class="login-icon">
     <image class="login-img" src="/images/loginLog.jpg"></image>
+    <!--
     <view class='userContent'>
       <text class="userinfo-nickname">{{wechatNO}}</text>
       <image  class="userinfo-avatar" src="{{avatarUrl}}" ></image>
         
-    </view>   
+    </view>  --> 
+    <view class='userContent'>
+      <open-data type="userNickName" class="userinfo-nickname"></open-data>
+      <view class="userinfo-avatar">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+    </view>
   </view>
   <!--
   <view class="userinfo">
@@ -21,8 +29,7 @@
   </view>  
   -->
   <view class="login-from">
-    
-    <!--账号-->
+       
     <view class="inputView">
       <image class="nameImage" src="/images/name.png"></image>
       <label class="loginLab">历史订场信息</label>
@@ -30,21 +37,20 @@
     </view>
     <view class="line"></view>
 
-    <!--密码-->
     <view class="inputView">
-      <image class="keyImage" src="/images/key.png"></image>
+      <image class="keyImage" src="/images/name.png"></image>
       <label class="loginLab">个人信息</label>
     </view>
     <view class="line"></view>
 
     <view class="inputView">
-      <image class="keyImage" src="/images/key.png"></image>
+      <image class="keyImage" src="/images/name.png"></image>
       <label class="loginLab">用户申请</label>    
     </view>
     <view class="line"></view>
 
     <view class="inputView">
-      <image class="keyImage" src="/images/key.png"></image>
+      <image class="keyImage" src="/images/name.png"></image>
       <label class="loginLab">审核信息</label>     
     </view>
     <view class="line"></view>

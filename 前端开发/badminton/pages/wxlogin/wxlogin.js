@@ -11,7 +11,7 @@ Page({
   onLoad: function () {
       var that = this;
       // 查看是否授权
-      /*wx.getSetting({
+      wx.getSetting({
           success: function (res) {
               if (res.authSetting['scope.userInfo']) {
                   wx.getUserInfo({
@@ -28,7 +28,7 @@ Page({
                   });
               }
           }
-      })*/
+      })
   },
   bindGetUserInfo: function (e) {
       if (e.detail.userInfo) {
@@ -51,15 +51,15 @@ Page({
                   //从数据库获取用户信息
                   that.queryUsreInfo(e.detail.userInfo.nickName);
                   console.log("插入小程序登录用户信息成功！");
-                  console.log(res.data);
-                  app.globalData.wechatNO = e.detail.userInfo.nickName;
-                  app.globalData.avatarUrl = e.detail.userInfo.avatarUrl
+                  
+                  //app.globalData.wechatNO = e.detail.userInfo.nickName;
+                  //app.globalData.avatarUrl = e.detail.userInfo.avatarUrl
               }
           });
-          that.setData({
+          /*that.setData({
             wechatNO:e.detail.userInfo.nickName,
             avatarUrl: e.detail.userInfo.avatarUrl
-           });
+           });*/
           
           //授权成功后，跳转进入小程序首页
           wx.switchTab({
@@ -85,7 +85,7 @@ Page({
       wx.request({
           url: 'http://127.0.0.1:8080/booking/getMyInfo',
           data: {
-            user_id:'5',
+            user_id:'6',
             wechatNO: 'HL'
           },
           header: {

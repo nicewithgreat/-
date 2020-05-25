@@ -35,9 +35,8 @@ App({
   },
   
   globalData: {
-    userInfo: null,
-    wechatNO:null,
-    avatarUrl:null
+    userInfo: null
+    
   }
 
 })
