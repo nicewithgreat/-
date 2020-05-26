@@ -30,7 +30,6 @@ public class UserTable2Controller {
 	public int addUser(String wechatNO) {
 		UserTable2Example example = new UserTable2Example();
 		example.createCriteria().andUserNameEqualTo(wechatNO);
-		
 		if(ut2service.selectByExample(example).isEmpty()) {
 			UserTable2 record = new UserTable2();
 			record.setUserName(wechatNO);
@@ -41,8 +40,8 @@ public class UserTable2Controller {
 			
 			return ut2service.insertSelective(record);
 		}
-		
 		return 0;
+		
 	}
 	
 	//功能描述:提交完善的个人信息
@@ -98,9 +97,9 @@ public class UserTable2Controller {
 	
 	//功能描述:管理员审核游客提交的完善信息，给予是否通过
 	//返回1则审核完成成功
-	@RequestMapping("/improvingInfo")
+	@RequestMapping("/checkInfo")
 	@ResponseBody
-	public int improvingInfo(int user_id,boolean waitResult) {
+	public int checkInfo(int user_id,boolean waitResult) {
 		UserTable2Example example = new UserTable2Example();
 		UserTable2Example.Criteria criteria = example.createCriteria();
 		criteria.andUserIdEqualTo(user_id);
