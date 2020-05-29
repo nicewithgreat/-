@@ -14,19 +14,19 @@ Page({
     windowWidth: 0,
   },
   //根据viewId查询view的宽度
-  queryViewWidth: function(viewId) {
+  queryViewWidth: function (viewId) {
     //创建节点选择器
-    return new Promise(function(resolve) {
+    return new Promise(function (resolve) {
       var query = wx.createSelectorQuery();
       var that = this;
-      query.select('.' + viewId).boundingClientRect(function(rect) {
+      query.select('.' + viewId).boundingClientRect(function (rect) {
         resolve(rect.width);
       }).exec();
     });
 
   },
   //停止跑马灯
-  stopMarquee: function() {
+  stopMarquee: function () {
     var that = this;
     //清除旧的定时器
     if (that.data != null) {
@@ -34,11 +34,11 @@ Page({
     }
   },
   //执行跑马灯动画
-  excuseAnimation: function() {
+  excuseAnimation: function () {
     var that = this;
     if (that.data.length > that.data.windowWidth) {
       //设置循环
-      let interval = setInterval(function() {
+      let interval = setInterval(function () {
         if (that.data.offsetLeft <= 0) {
           if (that.data.offsetLeft >= -that.data.length) {
             that.setData({
@@ -58,18 +58,18 @@ Page({
     }
   },
   //开始跑马灯
-  startMarquee: function() {
+  startMarquee: function () {
     var that = this;
     that.stopMarquee();
     //初始化数据
     that.data.windowWidth = wx.getSystemInfoSync().windowWidth;
-    that.queryViewWidth('text').then(function(resolve) {
+    that.queryViewWidth('text').then(function (resolve) {
       that.data.length = resolve;
       console.log(that.data.length + "/" + that.data.windowWidth);
       that.excuseAnimation();
     });
   },
-  onShow: function() {
+  onShow: function () {
     this.startMarquee();
   },
 })
