@@ -10,7 +10,7 @@ Page({
                 console.log(res);
                 that.setData({
                     section_Up_Height: res.windowHeight * 0.6,
-                    section_Down_Height: res.windowHeight * 0.2
+                    section_Down_Height: res.windowHeight * 0.3
                 })
             }
         })
