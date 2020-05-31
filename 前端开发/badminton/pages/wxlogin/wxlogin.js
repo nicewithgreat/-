@@ -84,8 +84,8 @@ Page({
       wx.request({
           url: 'http://127.0.0.1:8080/booking/getMyInfo',
           data: {
-            user_id:'6',
-            wechatNO: 'HL'
+            user_id:'1',
+            wechatNO: '小月半จุ๊บ'
           },
           header: {
               'content-type': 'application/json'
