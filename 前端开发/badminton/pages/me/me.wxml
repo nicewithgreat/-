@@ -1,0 +1,21 @@
+<l-form name="user" l-form-btn-class="l-form-btn-class" bind:linsubmit="submit">
+    <l-form-item label="微信昵称:" name="userName">
+        <l-input id="userName" value="{{user.userName}}" hide-label show-row="{{false}}" disabled="{{true}}" placeholder="{{user.userName}}"/>
+    </l-form-item>
+
+    <l-form-item label="学生学号:" name="identity_num">
+        <l-input id="identity_num" value="{{user.identity_num}}" hide-label show-row="{{false}}" disabled="{{disabled}}" placeholder="{{user.identity_num}}" />
+    </l-form-item>
+
+    <l-form-item label="用户身份:" name="property">
+    <l-input id="property" value="{{user.property}}" hide-label show-row="{{false}}" disabled="{{true}}"  placeholder="{{user.property}}"/>
+    </l-form-item>
+
+    <l-toast />
+    <view slot="submit">
+        <l-button>修改</l-button>
+    </view>
+    <view slot="reset">
+        <l-button type="default" plain>重置</l-button>
+    </view>
+</l-form>

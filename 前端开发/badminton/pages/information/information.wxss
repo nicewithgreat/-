@@ -51,7 +51,6 @@
 /*表单内容*/
 .login-from {
   width: 100%;
-  margin-top: 10px;
   flex: auto;
   height:100%;
 }
@@ -107,3 +106,4 @@
 .usermotto {
   margin-top: 200px;
 }
+

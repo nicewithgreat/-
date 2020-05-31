@@ -3,7 +3,8 @@
     
     "pages/wxlogin/wxlogin",
     "pages/index/index",
-    "pages/information/information"
+    "pages/information/information",
+    "pages/me/me"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -37,6 +38,16 @@
   ],
 
   "style": "v2",
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "l-icon": "dist/icon/index",
+    "l-button":"dist/button/index",
+    "l-form":"dist/form/index",
+    "l-form-item":"dist/form-item/index",
+    "l-list":"dist/list/index",
+    "l-input":"dist/input/index",
+    "l-toast":"dist/toast/index"
+  }
+  
 
 }

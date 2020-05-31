@@ -50,7 +50,7 @@
           </view>
         </view>
     </view>
-    <button form-type="submit">预订</button>
+    <l-button bg-color="#ff5e8e" size="long" shape="semicircle">预订</l-button>
     </form>
   </view>
 

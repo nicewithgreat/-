@@ -8,7 +8,7 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-   // wechatNO:'',
+    wechatNO:'',
    // avatarUrl:''
   },
   //事件处理函数
@@ -54,6 +54,12 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  me:function(){
+    var list=this.data.playlist
+        wx.navigateTo({
+            url: '/pages/me/me'
+        })
   }
   
 })

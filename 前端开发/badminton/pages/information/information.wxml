@@ -28,16 +28,17 @@
     <text class="user-motto">{{motto}}</text>
   </view>  
   -->
+  <!--
   <view class="login-from">
        
     <view class="inputView">
-      <image class="nameImage" src="/images/name.png"></image>
+      <image class="nameImage" src="/images/name.png"  ></image>
       <label class="loginLab">历史订场信息</label>
      
     </view>
     <view class="line"></view>
 
-    <view class="inputView">
+    <view class="inputView" bindtap="me">
       <image class="keyImage" src="/images/name.png"></image>
       <label class="loginLab">个人信息</label>
     </view>
@@ -55,5 +56,15 @@
     </view>
     <view class="line"></view>
 
-    </view>
+    </view>-->
+     <view class="login-from">
+      <view class="inputView">
+        <l-list title="个人信息" icon="user" left-gap="10" bindtap="me"/>
+        <l-list title="历史订场信息" icon="time" left-gap="10"/>
+        <l-list title="审核信息" icon="order" left-gap="10"/>
+        <l-list title="消息通知" icon="notification" left-gap="10"/>
+        <l-list title="帮助" icon="help" left-gap="10"/>
+      </view>
+     </view>
 </view>
+    
