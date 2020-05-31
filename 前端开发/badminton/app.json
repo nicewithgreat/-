@@ -46,7 +46,14 @@
     "l-form-item":"dist/form-item/index",
     "l-list":"dist/list/index",
     "l-input":"dist/input/index",
-    "l-toast":"dist/toast/index"
+    "l-toast":"dist/toast/index",
+    "l-notice-bar": "/dist/notice-bar/index",
+    "l-combined-tabs": "/dist/combined-tabs/index",
+    "l-tabpanel": "/dist/tabpanel/index",
+    "l-card":"/dist/card/index",
+    "l-tabs":"/dist/tabs/index",
+    "l-grid":"/dist/grid/index",
+    "l-grid-item":"/dist/grid-item/index"
   }
   
 
