@@ -32,4 +32,9 @@ public class ScheduledTimeTable1 {
     public void setEndtime(Date endtime) {
         this.endtime = endtime;
     }
+
+	@Override
+	public String toString() {
+		return "ScheduledTimeTable1 [timeId=" + timeId + ", starttime=" + starttime + ", endtime=" + endtime + "]";
+	}
 }

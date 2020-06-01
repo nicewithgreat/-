@@ -16,7 +16,8 @@ import com.booking.pojo.TodayCourtTable5Example;
 */
 public interface TodayCourt5Service {
 	int updateByExampleSelective(TodayCourtTable5 record,TodayCourtTable5Example example);
-	List<TodayCourtTable5> selectByExample(TodayCourtTable5Example example);
-	List<TodayCourtTable5> selectByExampleWith(TodayCourtTable5Example example);
 	
+	List<TodayCourtTable5> selectByExample(TodayCourtTable5Example example);
+	
+	List<TodayCourtTable5> selectByExampleWith(TodayCourtTable5Example example);	
 }
