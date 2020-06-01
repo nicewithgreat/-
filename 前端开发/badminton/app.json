@@ -1,0 +1,59 @@
+{
+  "pages": [
+
+    "pages/wxlogin/wxlogin",
+    "pages/index/index",
+    "pages/information/information",
+    "pages/me/me"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#ccc",
+    "selectedColor": "#ff4c91",
+    "borderStyle": "white",
+    "backgroundColor": "#fff",
+    "list": [{
+        "pagePath": "pages/index/index",
+        "iconPath": "images/badminton.jpg",
+        "selectedIconPath": "images/badminton.jpg",
+        "text": "订场"
+      },
+      {
+        "pagePath": "pages/information/information",
+        "iconPath": "images/me.jpg",
+        "selectedIconPath": "images/me.jpg",
+        "text": "我"
+      }
+    ]
+
+  },
+  "requiredBackgroundModes": [
+    "audio"
+  ],
+
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "l-icon": "dist/icon/index",
+    "l-button": "dist/button/index",
+    "l-form": "dist/form/index",
+    "l-form-item": "dist/form-item/index",
+    "l-list": "dist/list/index",
+    "l-input": "dist/input/index",
+    "l-toast": "dist/toast/index",
+    "l-notice-bar": "/dist/notice-bar/index",
+    "l-combined-tabs": "/dist/combined-tabs/index",
+    "l-tabpanel": "/dist/tabpanel/index",
+    "l-card": "/dist/card/index",
+    "l-tabs": "/dist/tabs/index",
+    "l-grid": "/dist/grid/index",
+    "l-grid-item": "/dist/grid-item/index"
+  }
+
+
+}
