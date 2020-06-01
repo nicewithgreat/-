@@ -22,7 +22,12 @@ import com.booking.service.UserTable2Service;
 public class UserTable2Controller {
 	@Autowired
 	UserTable2Service ut2service;
-	
+	/* 函数参数
+	 * String wechatNO 微信号
+	 * int user_id 用户表主键：UserTable2Controller.user_id
+	 * String identity_num 申请的学号或工号
+	 * boolean waitResult 管理员审查 完善个人信息的 结果
+	 * */
 	//功能描述:当新用户第一次登录，则将微信号当用户名称插入用户表
 	//返回1即成功
 	@RequestMapping("/addUser")
@@ -30,6 +35,7 @@ public class UserTable2Controller {
 	public int addUser(String wechatNO) {
 		UserTable2Example example = new UserTable2Example();
 		example.createCriteria().andUserNameEqualTo(wechatNO);
+		
 		if(ut2service.selectByExample(example).isEmpty()) {
 			UserTable2 record = new UserTable2();
 			record.setUserName(wechatNO);
@@ -40,8 +46,8 @@ public class UserTable2Controller {
 			
 			return ut2service.insertSelective(record);
 		}
-		return 0;
 		
+		return 0;
 	}
 	
 	//功能描述:提交完善的个人信息
@@ -97,9 +103,9 @@ public class UserTable2Controller {
 	
 	//功能描述:管理员审核游客提交的完善信息，给予是否通过
 	//返回1则审核完成成功
-	@RequestMapping("/checkInfo")
+	@RequestMapping("/checkImprovingInfo")
 	@ResponseBody
-	public int checkInfo(int user_id,boolean waitResult) {
+	public int checkImprovingInfo(int user_id,boolean waitResult) {
 		UserTable2Example example = new UserTable2Example();
 		UserTable2Example.Criteria criteria = example.createCriteria();
 		criteria.andUserIdEqualTo(user_id);
