@@ -6,7 +6,7 @@
 <title>test</title>
 </head>
 <body>
-<form action="getTodayCourt" method="post">
+<form action="getallCourt" method="post">
 	<input type="submit" value="现在订场情况" />
 </form>
 </body>
