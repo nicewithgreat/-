@@ -60,6 +60,12 @@ Page({
         wx.navigateTo({
             url: '/pages/me/me'
         })
+  },
+  history:function(){
+    var list=this.data.playlist
+        wx.navigateTo({
+            url: '/pages/history/history'
+        })
   }
   
 })

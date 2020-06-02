@@ -16,13 +16,15 @@ Page({
               if (res.authSetting['scope.userInfo']) {
                   wx.getUserInfo({
                       success: function (res) {
-                          //从数据库获取用户信息
-                          that.queryUsreInfo();
-                          //用户已经授权过
-                          wx.switchTab({
-                              url: '/pages/index/index',
+                        var userInfo = res.userInfo
+                        var nickName = userInfo.nickName
+                        //从数据库获取用户信息
+                        that.queryUsreInfo(nickName);
+                        //用户已经授权过
+                        wx.switchTab({
+                            url: '/pages/index/index',
                               
-                          })
+                        })
                       }
                   });
               }
@@ -49,7 +51,7 @@ Page({
               success: function (res) {
                   //从数据库获取用户信息
                   that.queryUsreInfo(e.detail.userInfo.nickName);
-                  console.log("插入小程序登录用户信息成功！");
+                  //console.log("插入小程序登录用户信息成功！");
                   
                   //app.globalData.wechatNO = e.detail.userInfo.nickName;
                   //app.globalData.avatarUrl = e.detail.userInfo.avatarUrl
@@ -80,12 +82,12 @@ Page({
       }
   },
   //获取用户信息接口
-  queryUsreInfo: function () {
+  queryUsreInfo: function (username) {
       wx.request({
           url: 'http://127.0.0.1:8080/booking/getMyInfo',
           data: {
-            user_id:'1',
-            wechatNO: '小月半จุ๊บ'
+            //user_id:'6',
+            wechatNO: username
           },
           header: {
               'content-type': 'application/json'

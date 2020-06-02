@@ -1,0 +1,20 @@
+<l-card  type="primary" 
+           l-img-class="right-card" 
+           position="left" 
+           image="/images/3.jpg"
+    title="2020-06-01">
+    <view class="content">
+      <view class="view">
+      场地：一号场
+      </view>
+      <view class="view1">
+      场地材质：塑胶场地
+      </view>
+      <view class="view">
+      订场状态：预定
+      </view>
+      <view class="view1">
+      订场时间段：17:30-19:30
+      </view>
+    </view>
+  </l-card>

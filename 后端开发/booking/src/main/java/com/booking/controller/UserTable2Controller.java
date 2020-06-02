@@ -55,6 +55,7 @@ public class UserTable2Controller {
 	@RequestMapping("/improvingInfo")
 	@ResponseBody
 	public int improvingInfo(int user_id,String wechatNO,String identity_num) {
+		System.out.println(user_id);
 		UserTable2Example example = new UserTable2Example();
 		UserTable2Example.Criteria criteria = example.createCriteria();
 		criteria.andUserNameEqualTo(wechatNO);
@@ -73,11 +74,13 @@ public class UserTable2Controller {
 	//Ê§°Ü·µ»Ønull
 	@RequestMapping("/getMyInfo")
 	@ResponseBody
-	public Object getMyInfo(int user_id,String wechatNO) {
+	public Object getMyInfo(//int user_id,
+							String wechatNO) {
+		//System.out.print(wechatNO);
 		UserTable2Example example = new UserTable2Example();
 		UserTable2Example.Criteria criteria = example.createCriteria();
 		criteria.andUserNameEqualTo(wechatNO);
-		criteria.andUserIdEqualTo(user_id);
+		//criteria.andUserIdEqualTo(user_id);
 		
 		List<UserTable2> list = ut2service.selectByExample(example);
 		if(list.isEmpty()) {
@@ -121,6 +124,7 @@ public class UserTable2Controller {
 		
 		return ut2service.updateByExampleSelective(record , example);
 		
-
 	}
+	
+	
 }

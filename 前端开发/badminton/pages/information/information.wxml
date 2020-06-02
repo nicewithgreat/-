@@ -59,8 +59,8 @@
     </view>-->
      <view class="login-from">
       <view class="inputView">
-        <l-list title="个人信息" icon="user" left-gap="10" bindtap="me"/>
-        <l-list title="历史订场信息" icon="time" left-gap="10"/>
+        <l-list title="个人信息" icon="user" left-gap="10" bind:lintap="me"/>
+        <l-list title="历史订场信息" icon="time" left-gap="10" bind:lintap="history"/>
         <l-list title="审核信息" icon="order" left-gap="10"/>
         <l-list title="消息通知" icon="notification" left-gap="10"/>
         <l-list title="帮助" icon="help" left-gap="10"/>

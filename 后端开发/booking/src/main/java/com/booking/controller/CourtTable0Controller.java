@@ -31,10 +31,10 @@ public class CourtTable0Controller {
 	@RequestMapping("/getallCourt")
 	@ResponseBody
 	public List<CourtTable0> getall(){
-		List<CourtTable0> ct0list= (ct0service.selectByExample(new CourtTable0Example()));
-		for(CourtTable0 ct0 : ct0list) {
-			System.out.print(ct0.toString());
-		}		
+//		List<CourtTable0> ct0list= (ct0service.selectByExample(new CourtTable0Example())) .stream().collect(Collectors.toList());
+//		for(CourtTable0 ct0 : ct0list) {
+//			System.out.print(ct0.toString());
+//		}		
 		return ct0service.selectByExample(new CourtTable0Example()); 
 	}
 }

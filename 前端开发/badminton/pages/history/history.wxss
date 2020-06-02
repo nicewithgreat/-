@@ -1,0 +1,19 @@
+.content{
+  display: grid;
+  font-size: small;
+  font-display: block;
+  
+}
+
+.right-card{
+  width: 140rpx;  
+  height: 140rpx;  
+  border-radius: 10px;
+}
+.view {
+  background-color: rgb(244, 244, 244);
+  line-height: 20px;
+}
+.view1{
+  line-height: 20px;
+}

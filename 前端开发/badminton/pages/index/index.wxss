@@ -4,5 +4,9 @@
     flex-direction: column;
     padding: 0;
     box-sizing: border-box;
-    background-color: #c9aabc
+    background-color: #98cdff
+}
+.content{
+    font-size: 13px;
+    display: grid;
 }

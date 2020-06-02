@@ -4,7 +4,8 @@
     "pages/wxlogin/wxlogin",
     "pages/index/index",
     "pages/information/information",
-    "pages/me/me"
+    "pages/me/me",
+    "pages/history/history"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -46,13 +47,16 @@
     "l-list": "dist/list/index",
     "l-input": "dist/input/index",
     "l-toast": "dist/toast/index",
-    "l-notice-bar": "/dist/notice-bar/index",
-    "l-combined-tabs": "/dist/combined-tabs/index",
-    "l-tabpanel": "/dist/tabpanel/index",
-    "l-card": "/dist/card/index",
-    "l-tabs": "/dist/tabs/index",
-    "l-grid": "/dist/grid/index",
-    "l-grid-item": "/dist/grid-item/index"
+    "l-notice-bar": "dist/notice-bar/index",
+    "l-combined-tabs": "dist/combined-tabs/index",
+    "l-tabpanel": "dist/tabpanel/index",
+    "l-card": "dist/card/index",
+    "l-tabs": "dist/tabs/index",
+    "l-grid": "dist/grid/index",
+    "l-grid-item": "dist/grid-item/index",
+    "l-collapse":"dist/collapse/index",
+    "l-collapse-item":"dist/collapse-item/index",
+    "l-tag":"dist/tag/index"
   }
 
 
