@@ -11,6 +11,8 @@ Page({
         arr:['计算机与信息工程学院','外国语学院','2','3','4'],
         college:''
       }*/
+      check:true,
+      team:false
     },
     /*picker选择
     pickerChange:function(e){
@@ -30,7 +32,7 @@ Page({
         }
         
       })
-      
+      this.checkproperty()
     },
     submit:function(e){
       const {detail} = e;
@@ -64,6 +66,18 @@ Page({
     submitcollege:function(e){
       const {detail} = e;
       console.log(detail.values)
+      var college=detail.values.college
+      if(college==''){
+        wx.lin.showToast({
+          title: '学院不能为空~',
+          icon: 'error'   
+        })       
+      }else{
+        wx.lin.showToast({
+        title: '提交成功，等待审核~',
+        icon: 'success'      
+      })
+      }
     },
     improvingInfo:function(identityNum){
       wx.request({
@@ -97,6 +111,19 @@ Page({
               getApp().globalData.userInfo = res.data;
           }
       });
+  },
+  checkproperty:function(){
+    if(getApp().globalData.userInfo.property=="普通用户" || getApp().globalData.userInfo.property=="球队用户"){
+      this.setData({
+        check:false,
+        disabled:true
+      })
+    }
+    if(getApp().globalData.userInfo.property=="普通用户"){
+      this.setData({
+        team:true
+      })
+    }
   }
   
     

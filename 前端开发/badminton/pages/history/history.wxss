@@ -17,3 +17,21 @@
 .view1{
   line-height: 20px;
 }
+
+.imagesize{
+  display:flex;                   
+  justify-content: center;    
+  align-items: center;     
+  height: 300px;
+}
+
+.imagesize image { 
+  width:300rpx;
+  height:300rpx;
+}
+
+.loading{
+  display:flex;                   
+  justify-content: center;     
+  font-size: small;
+}

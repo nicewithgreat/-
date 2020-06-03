@@ -1,20 +1,57 @@
-<l-card  type="primary" 
+<!--查无历史记录显示页面-->
+<view class="imagesize" wx:if="{{history==''}}">
+  <image src="/images/nohistory.gif" class='in-image'></image>
+</view>
+<view class="loading" wx:if="{{history==''}}">您暂无历史订场记录哦~</view>
+<!--历史信息卡片展示-->
+<l-card  wx:for="{{history}}" wx:key="index"
+           type="primary" 
            l-img-class="right-card" 
            position="left" 
            image="/images/3.jpg"
-    title="2020-06-01">
+    title="{{item.bookDate}}" >
     <view class="content">
-      <view class="view">
+      <view class="view" wx:if="{{item.courtId==1}}">
       场地：一号场
       </view>
-      <view class="view1">
+      <view class="view" wx:elif="{{item.courtId==2}}">
+      场地：二号场
+      </view>
+      <view class="view" wx:elif="{{item.courtId==3}}">
+      场地：三号场
+      </view>
+      <view class="view" wx:elif="{{item.courtId==4}}">
+      场地：四号场
+      </view>
+      <view class="view" wx:elif="{{item.courtId==5}}">
+      场地：五号场
+      </view>
+      <view class="view" wx:elif="{{item.courtId==6}}">
+      场地：六号场
+      </view>
+      <view class="view" wx:elif="{{item.courtId==7}}">
+      场地：七号场
+      </view>
+      <view class="view" wx:elif="{{item.courtId==8}}">
+      场地：八号场
+      </view>
+      <view class="view1" wx:if="{{item.courtId<=4}}">
       场地材质：塑胶场地
       </view>
-      <view class="view">
-      订场状态：预定
+      <view class="view1" wx:elif="{{item.courtId>4}}">
+      场地材质：水泥场地
       </view>
-      <view class="view1">
+      <view class="view" wx:if="{{item.bookState==0}}">
+      订场状态：已订场
+      </view>
+      <view class="view" wx:elif="{{item.bookState==1}}">
+      订场状态：已退场
+      </view>
+      <view class="view1" wx:if="{{item.timeId==1}}">
       订场时间段：17:30-19:30
+      </view>
+      <view class="view1" wx:elif="{{item.timeId==2}}">
+      订场时间段：19:30-22:00
       </view>
     </view>
   </l-card>

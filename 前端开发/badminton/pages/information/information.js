@@ -62,10 +62,28 @@ Page({
         })
   },
   history:function(){
+    this.getMyHistoryInfo()
     var list=this.data.playlist
         wx.navigateTo({
             url: '/pages/history/history'
         })
-  }
+  },
+  getMyHistoryInfo:function(){
+    wx.request({
+      url: 'http://127.0.0.1:8080/booking/getMyHistoryInfo',
+      data: {
+        user_id:getApp().globalData.userInfo.userId,
+      },
+      header: {
+          'content-type': 'application/json'
+      },
+      success: function (res) {
+          console.log(res.data);
+          //console.log(res.data[0].bookDate);
+          getApp().globalData.history = res.data
+          //console.log(getApp().globalData.history[1]);
+      }
+  });
+  },
   
 })

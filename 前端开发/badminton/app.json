@@ -56,7 +56,8 @@
     "l-grid-item": "dist/grid-item/index",
     "l-collapse":"dist/collapse/index",
     "l-collapse-item":"dist/collapse-item/index",
-    "l-tag":"dist/tag/index"
+    "l-tag":"dist/tag/index",
+    "l-loading":"dist/loading/index"
   }
 
 
