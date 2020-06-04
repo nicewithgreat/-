@@ -1,11 +1,11 @@
 <l-tabs bind:linchange="changeTabs" placement="top" >
-<l-tabpanel tab="个人信息" key="one" slot="one">
+<l-tabpanel tab="固定场申请" key="one" slot="one">
     <l-form name="user" l-form-btn-class="l-form-btn-class" bind:linsubmit="submit">
-    <l-form-item label="微信昵称：" name="userName">
+    <l-form-item label="周：" name="userName">
         <l-input id="userName" value="{{user.userName}}" hide-label show-row="{{false}}" disabled="{{true}}" placeholder="{{user.userName}}"/>
     </l-form-item>
 
-    <l-form-item label="学生学号：" name="identity_num">
+    <l-form-item label="时间段：" name="identity_num">
         <l-input id="identity_num" value="{{user.identity_num}}" hide-label show-row="{{false}}" disabled="{{disabled}}"  />
     </l-form-item>
 
@@ -29,8 +29,7 @@
     
     </l-form>
 </l-tabpanel>
-<l-tabpanel tab="球队用户申请" key="two" slot="two" bindtap="toast">
-<l-toast />
+<l-tabpanel tab="固定场更换" key="two" slot="two">
 <l-form name="user" l-form-btn-class="l-form-btn-class" bind:linsubmit="submitcollege">
     <l-form-item  label="所属学院：" name="college">   
     <l-input id="college" value="{{user.college}}" hide-label show-row="{{false}}" disabled="{{!team}}"  placeholder="请输入学院全称"/>

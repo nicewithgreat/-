@@ -9,6 +9,7 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     wechatNO:'',
+    team:false
    // avatarUrl:''
   },
   //事件处理函数
@@ -18,6 +19,7 @@ Page({
     })
   },
   onLoad: function () {
+    this.checkproperty()
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -47,6 +49,7 @@ Page({
       })
     }
   },
+  //获取用户信息
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -55,12 +58,14 @@ Page({
       hasUserInfo: true
     })
   },
+  //跳转查看个人信息界面
   me:function(){
     var list=this.data.playlist
         wx.navigateTo({
             url: '/pages/me/me'
         })
   },
+  //跳转查看历史订场信息界面
   history:function(){
     this.getMyHistoryInfo()
     var list=this.data.playlist
@@ -68,6 +73,7 @@ Page({
             url: '/pages/history/history'
         })
   },
+  //获取用户历史订场信息
   getMyHistoryInfo:function(){
     wx.request({
       url: 'http://127.0.0.1:8080/booking/getMyHistoryInfo',
@@ -84,6 +90,22 @@ Page({
           //console.log(getApp().globalData.history[1]);
       }
   });
+  },
+  //跳转固定场申请界面
+  fixcourt:function(){
+    this.getMyHistoryInfo()
+    var list=this.data.playlist
+        wx.navigateTo({
+            url: '/pages/fixcourt/fixcourt'
+        })
+  },
+  //验证用户身份是否为球队用户
+  checkproperty:function(){
+    if(getApp().globalData.userInfo.property=="球队用户"){
+      this.setData({
+        team:true
+      })
+    }
   },
   
 })

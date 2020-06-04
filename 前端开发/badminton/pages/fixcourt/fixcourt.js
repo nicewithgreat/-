@@ -6,13 +6,23 @@ Page({
         property:'',
         college:''      
       },
-      disabled:false, 
+      disabled:false,
+      /*picker:{
+        arr:['计算机与信息工程学院','外国语学院','2','3','4'],
+        college:''
+      }*/
       check:true,
       team:false
     },
-    
+    /*picker选择
+    pickerChange:function(e){
+      this.setData({
+        'picker.college':e.detail.value
+      })
+    },*/
     onLoad: function () {
       wx.lin.initValidateForm(this)
+      //this.queryUsreInfo()
       this.setData({
         user:{
           userName:getApp().globalData.userInfo.userName,
@@ -23,9 +33,7 @@ Page({
         
       })
       this.checkproperty()
-      this.getTeamsList()
     },
-    //完善个人信息事件
     submit:function(e){
       const {detail} = e;
       console.log(detail.values)
@@ -55,7 +63,6 @@ Page({
       }
       
     },
-    //球队用户申请事件
     submitcollege:function(e){
       const {detail} = e;
       console.log(detail.values)
@@ -72,7 +79,6 @@ Page({
       })
       }
     },
-    //调用后台提交用户信息函数
     improvingInfo:function(identityNum){
       wx.request({
         url: 'http://127.0.0.1:8080/booking/improvingInfo',
@@ -90,7 +96,6 @@ Page({
         }
     });
     },
-    //调用后台查看用户信息函数
     queryUsreInfo: function (username) {
       wx.request({
           url: 'http://127.0.0.1:8080/booking/getMyInfo',
@@ -107,7 +112,6 @@ Page({
           }
       });
   },
-  //验证用户身份
   checkproperty:function(){
     if(getApp().globalData.userInfo.property=="普通用户" || getApp().globalData.userInfo.property=="球队用户"){
       this.setData({
@@ -120,37 +124,7 @@ Page({
         team:true
       })
     }
-  },
-  //验证是否球队用户身份提示信息
-  toast:function(){
-    if(getApp().globalData.userInfo.property=="球队用户"){
-      wx.lin.showToast({
-        title: '您已经是球队用户了！',
-        icon: 'error'      
-      })
-    }else if(getApp().globalData.userInfo.property!="球队用户" && getApp().globalData.userInfo.property!="普通用户"){
-      wx.lin.showToast({
-        title: '请您完善好个人信息再进行申请！',
-        icon: 'error'      
-      })
-    }
-  },
-  //调用后台获取学院球队信息函数
-  getTeamsList: function () {
-    wx.request({
-        url: 'http://127.0.0.1:8080/booking/getTeamsList',
-        data: {
-          //user_id:'6',
-          //wechatNO: username
-        },
-        header: {
-            'content-type': 'application/json'
-        },
-        success: function (res) {
-            console.log(res.data);
-            //getApp().globalData.userInfo = res.data;
-        }
-    });
-},
+  }
+  
     
   })

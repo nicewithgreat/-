@@ -1,11 +1,11 @@
 {
   "pages": [
-
     "pages/wxlogin/wxlogin",
     "pages/index/index",
     "pages/information/information",
     "pages/me/me",
-    "pages/history/history"
+    "pages/history/history",
+    "pages/fixcourt/fixcourt"
   ],
   "window": {
     "backgroundTextStyle": "light",
