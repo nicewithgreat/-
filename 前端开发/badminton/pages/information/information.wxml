@@ -3,12 +3,6 @@
 <!--微信头像和昵称-->
   <view class="login-icon">
     <image class="login-img" src="/images/loginLog.jpg"></image>
-    <!--
-    <view class='userContent'>
-      <text class="userinfo-nickname">{{wechatNO}}</text>
-      <image  class="userinfo-avatar" src="{{avatarUrl}}" ></image>
-        
-    </view>  --> 
     <view class='userContent'>
       <open-data type="userNickName" class="userinfo-nickname"></open-data>
       <view class="userinfo-avatar">
@@ -16,47 +10,7 @@
       </view>
     </view>
   </view>
-  <!--
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image  class="userinfo-avatar" src="{{avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{wechatNO}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>  
-  -->
-  <!--
-  <view class="login-from">
-       
-    <view class="inputView">
-      <image class="nameImage" src="/images/name.png"  ></image>
-      <label class="loginLab">历史订场信息</label>
-     
-    </view>
-    <view class="line"></view>
 
-    <view class="inputView" bindtap="me">
-      <image class="keyImage" src="/images/name.png"></image>
-      <label class="loginLab">个人信息</label>
-    </view>
-    <view class="line"></view>
-
-    <view class="inputView">
-      <image class="keyImage" src="/images/name.png"></image>
-      <label class="loginLab">用户申请</label>    
-    </view>
-    <view class="line"></view>
-
-    <view class="inputView">
-      <image class="keyImage" src="/images/name.png"></image>
-      <label class="loginLab">审核信息</label>     
-    </view>
-    <view class="line"></view>
-
-    </view>-->
      <view class="login-from">
       <view class="inputView">
         <l-list title="个人信息" icon="user" left-gap="10" bind:lintap="me"/>
