@@ -12,10 +12,16 @@ Page({
                 if (res.confirm) {
                     //调用后台函数把信息写入数据库
                     console.log('用户点击了确定')
+                    this.bookTodayCourt()
                 } else if (res.cancel) {
                     console.log('用户点击了取消')
                 }
             }
         })
+    },
+
+    //当日订场写入数据库
+    bookTodayCourt: function () {
+        
     }
 })

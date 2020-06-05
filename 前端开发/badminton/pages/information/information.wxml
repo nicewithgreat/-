@@ -1,25 +1,25 @@
 <!--index.wxml-->
 <view class="container">
-<!--微信头像和昵称-->
-  <view class="login-icon">
-    <image class="login-img" src="/images/loginLog.jpg"></image>
-    <view class='userContent'>
-      <open-data type="userNickName" class="userinfo-nickname"></open-data>
-      <view class="userinfo-avatar">
-        <open-data type="userAvatarUrl"></open-data>
-      </view>
-    </view>
-  </view>
+	<l-dialog />
+	<!--微信头像和昵称-->
+	<view class="login-icon">
+		<image class="login-img" src="/images/loginLog.jpg"></image>
+		<view class='userContent'>
+			<open-data type="userNickName" class="userinfo-nickname"></open-data>
+			<view class="userinfo-avatar">
+				<open-data type="userAvatarUrl"></open-data>
+			</view>
+		</view>
+	</view>
 
-     <view class="login-from">
-      <view class="inputView">
-        <l-list title="个人信息" icon="user" left-gap="10" bind:lintap="me"/>
-        <l-list title="历史订场信息" icon="time" left-gap="10" bind:lintap="history"/>
-        <l-list wx:if="{{team}}" title="球队固定场申请" icon="order" left-gap="10" bind:lintap="fixcourt"/>
-        <l-list title="审核信息" icon="order" left-gap="10"/>
-        <l-list title="消息通知" icon="notification" left-gap="10"/>
-        <l-list title="帮助" icon="help" left-gap="10"/>
-      </view>
-     </view>
+	<view class="login-from">
+		<view class="inputView">
+			<l-list title="个人信息" icon="user" left-gap="10" bind:lintap="me" />
+			<l-list title="历史订场信息" icon="time" left-gap="10" bind:lintap="history" />
+			<l-list wx:if="{{team}}" title="球队固定场申请" icon="order" left-gap="10" bind:lintap="fixcourt" />
+			<l-list title="审核信息" icon="order" left-gap="10" />
+			<l-list title="消息通知" icon="notification" left-gap="10" />
+			<l-list title="帮助" icon="help" left-gap="10" bindtap="showDialog" />
+		</view>
+	</view>
 </view>
-    
