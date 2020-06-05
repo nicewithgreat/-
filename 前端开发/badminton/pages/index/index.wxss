@@ -8,5 +8,5 @@
 }
 .content{
     font-size: 13px;
-    display: grid;
+    display: flex;
 }

@@ -36,7 +36,8 @@ App({
   
   globalData: {
     userInfo: null,
-    history: null
+    history: null,
+    todaycourt:null
     
   }
 

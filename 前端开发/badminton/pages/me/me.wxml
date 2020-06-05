@@ -13,7 +13,6 @@
 				<l-input id="property" value="{{user.property}}" hide-label show-row="{{false}}" disabled="{{true}}" placeholder="{{user.property}}" />
 			</l-form-item>
 
-			<!--<picker id="college" bindchange="pickerChange" value="{{picker.college}}"  range="{{picker.arr}}">：{{picker.arr[picker.college]}}</picker>  -->
 			<!--留空-->
 			<view>
 				<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>

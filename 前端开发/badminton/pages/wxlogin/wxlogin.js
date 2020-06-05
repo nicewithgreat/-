@@ -10,6 +10,7 @@ Page({
   },
   onLoad: function () {
       var that = this;
+      
       // 查看是否授权
       wx.getSetting({
           success: function (res) {
@@ -20,6 +21,7 @@ Page({
                         var nickName = userInfo.nickName
                         //从数据库获取用户信息
                         that.queryUsreInfo(nickName);
+                        that.getTodayCourt()
                         //用户已经授权过
                         wx.switchTab({
                             url: '/pages/index/index',
@@ -51,6 +53,7 @@ Page({
               success: function (res) {
                   //从数据库获取用户信息
                   that.queryUsreInfo(e.detail.userInfo.nickName);
+                  that.getTodayCourt()
                   //console.log("插入小程序登录用户信息成功！");
                   
                   //app.globalData.wechatNO = e.detail.userInfo.nickName;
@@ -97,6 +100,23 @@ Page({
               getApp().globalData.userInfo = res.data;
           }
       });
-  }
+  },
+  //获取当日订场信息
+  getTodayCourt:function(){
+    wx.request({
+        url: 'http://127.0.0.1:8080/booking/getTodayCourtWithOtherInfo',
+        data: {
+          //user_id:'6',
+         // wechatNO: username
+        },
+        header: {
+            'content-type': 'application/json'
+        },
+        success: function (res) {
+            console.log(res.data);
+            getApp().globalData.todaycourt = res.data;
+        }
+    });
+},
   
 })
