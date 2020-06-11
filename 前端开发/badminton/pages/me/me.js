@@ -21,7 +21,7 @@ Page({
   onShow:function(){
    
   },
-  
+
   //完善个人信息事件
   submit: function (e) {
     const {

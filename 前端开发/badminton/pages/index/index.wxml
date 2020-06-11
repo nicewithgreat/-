@@ -25,22 +25,22 @@
 <l-tabs bind:linchange="changeTabs" active-key="{{one}}">
 	<l-tabpanel tab="塑胶场地" key="one" slot="one">
 		<l-card type="primary" image="/images/2.jpg" title="塑胶一号场">
-		<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
+			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
 			<view class="content" wx:if="{{todaycourt[0].courtState==0}}">
-				17:30-19:30：空闲	<text decode="{{true}}">&nbsp;</text>
+				17:30-19:30：空闲 <text decode="{{true}}">&nbsp;</text>
 				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain width="40" height="40" bindtap="bookTodayFreeCourt">预定</l-button>
 			</view>
 			<view class="content" wx:elif="{{todaycourt[0].courtState==1}}">
-				17:30-19:30：已订	<text decode="{{true}}">&nbsp;</text>
+				17:30-19:30：已订 <text decode="{{true}}">&nbsp;</text>
 				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain width="30" height="40">预定</l-button>
 			</view>
 			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
 			<view class="content" wx:if="{{todaycourt[8].courtState==0}}">
-				19:30-22:00：空闲	<text decode="{{true}}">&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain width="30" height="40" >预定</l-button>
+				19:30-22:00：空闲 <text decode="{{true}}">&nbsp;</text>
+				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain width="30" height="40">预定</l-button>
 			</view>
 			<view class="content" wx:elif="{{todaycourt[8].courtState==1}}">
-				19:30-22:00：已订	<text decode="{{true}}">&nbsp;</text>
+				19:30-22:00：已订 <text decode="{{true}}">&nbsp;</text>
 				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain width="30" height="40">预定</l-button>
 			</view>
 		</l-card>
