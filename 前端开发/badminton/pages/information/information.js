@@ -20,6 +20,7 @@ Page({
   },
   onLoad: function () {
     this.checkproperty()
+    this.getTeamsList()
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -93,7 +94,6 @@ Page({
   },
   //跳转固定场申请界面
   fixcourt: function () {
-    this.getMyHistoryInfo()
     var list = this.data.playlist
     wx.navigateTo({
       url: '/pages/fixcourt/fixcourt'
@@ -123,5 +123,22 @@ Page({
         }
       }
     })
-  }
+  },
+  //调用后台获取学院球队信息函数
+  getTeamsList: function () {
+    wx.request({
+      url: 'http://127.0.0.1:8080/booking/getTeamsList',
+      data: {
+        //user_id:'6',
+        //wechatNO: username
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data);
+        getApp().globalData.teamList = res.data;
+      }
+    });
+  },
 })

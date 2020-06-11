@@ -18,7 +18,7 @@
 				<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
 			</view>
 
-			<l-toast />
+			<l-message />
 			<view slot="submit" wx:if="{{check}}">
 				<l-button>完善</l-button>
 			</view>

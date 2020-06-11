@@ -36,7 +36,7 @@ public class UserTable2ServiceImpl implements UserTable2Service {
 	@Override
 	public int updateByExampleSelective(UserTable2 record, UserTable2Example example) {
 		// TODO Auto-generated method stub
-		return mapper.updateByExample(record, example);
+		return mapper.updateByExampleSelective(record, example);
 	}
 
 	@Override

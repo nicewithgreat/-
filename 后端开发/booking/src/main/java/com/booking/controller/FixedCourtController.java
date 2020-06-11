@@ -100,17 +100,6 @@ public class FixedCourtController {
 		return insertapplyFixedCourt(user_id,today_court_id,day_of_week,0);
 	}
 	
-	/*
-	 * 审核申请固定场的列表
-	 */
-	@RequestMapping("/reviewFixedCourtList")
-	@ResponseBody
-	public Object reviewFixedCourt() {
-		ApplyFixedTable7Example example = new ApplyFixedTable7Example();
-		ApplyFixedTable7Example.Criteria criteria = example.createCriteria();
-		criteria.andApplyStateEqualTo(0);//0:未审核
-		return af7service.selectByExample(example);
-	}
 	
 	/*
 	 * 审核申请固定场,是否同意

@@ -1,130 +1,83 @@
 Page({
     data: {
-      user:{
-        userName:'',
-        identity_num:'',
-        property:'',
-        college:''      
+      fixcourt:{
+        day:'',       //时间周几
+        time:'',      //时间段
+        court:''     //场地号
       },
-      disabled:false,
-      /*picker:{
-        arr:['计算机与信息工程学院','外国语学院','2','3','4'],
-        college:''
-      }*/
-      check:true,
-      team:false
+      
     },
-    /*picker选择
-    pickerChange:function(e){
-      this.setData({
-        'picker.college':e.detail.value
-      })
-    },*/
+    
     onLoad: function () {
       wx.lin.initValidateForm(this)
-      //this.queryUsreInfo()
-      this.setData({
-        user:{
-          userName:getApp().globalData.userInfo.userName,
-          identity_num:getApp().globalData.userInfo.identityNum,
-          property:getApp().globalData.userInfo.property,
-          college:''
-        }
-        
-      })
-      this.checkproperty()
-    },
+    
+    },  
     submit:function(e){
       const {detail} = e;
       console.log(detail.values)
-      var identity_num=detail.values.identity_num
-      //getApp().globalData.userInfo.identityNum=detail.values.identity_num
-      
-      this.improvingInfo(identity_num)
-      this.queryUsreInfo(getApp().globalData.userInfo.userName)
-      this.setData({ 
-        user:{
-          userName:getApp().globalData.userInfo.userName,
-          identity_num:getApp().globalData.userInfo.identityNum,
-          property:getApp().globalData.userInfo.property,
-          college:detail.values.college
+      //判断是周几，转为数字
+      var dayOfweek=['周一','周二','周三','周四','周五','周六','周日']
+      var day=''
+      for(var i=0;i<dayOfweek.length;i++){
+        if(detail.values.day==dayOfweek[i]){
+            day=i+1
         }
-      })
-      if(identity_num==''){
-        wx.lin.showToast({
-          title: '学号不能为空~',
-          icon: 'error'   
-        })       
+      }
+      //console.log(day)
+      //判断是几号场，转为数字
+      var courtid=['一号场','二号场','三号场','四号场','五号场','六号场','七号场','八号场']
+      var court=''
+      for(var j=0;j<courtid.length;j++){
+        if(detail.values.court==courtid[j]){
+          court=j+1
+        }
+      }
+      //console.log(court)
+      //判断todayCourtId
+      var todayCourt=getApp().globalData.todaycourt
+      var todayCourtId=''
+      for(var n=0;n<todayCourt.length;n++){
+        if(detail.values.time==todayCourt[n].timeId && court==todayCourt[n].courtId){
+          todayCourtId=todayCourt[n].todayCourtId
+        }
+      }
+      //console.log(todayCourtId)
+      if(day!='' && court!='' && todayCourtId!=''&&detail.values.time!=''){
+        this.applyFixedCourt(todayCourtId,day)
       }else{
         wx.lin.showToast({
-        title: '修改成功~',
-        icon: 'success'      
-      })
+          title: '请输入正确的时间或场地号或时间段',
+          icon: 'error'
+        })
       }
       
     },
-    submitcollege:function(e){
+    submitchange:function(e){
       const {detail} = e;
       console.log(detail.values)
-      var college=detail.values.college
-      if(college==''){
-        wx.lin.showToast({
-          title: '学院不能为空~',
-          icon: 'error'   
-        })       
-      }else{
-        wx.lin.showToast({
-        title: '提交成功，等待审核~',
-        icon: 'success'      
-      })
-      }
+      wx.lin.showMessage({
+        type:'primary',
+        content:'请输入正确的时间或场地号或时间段'
+    })
     },
-    improvingInfo:function(identityNum){
+    applyFixedCourt:function(today_court_id,day_of_week){
       wx.request({
-        url: 'http://127.0.0.1:8080/booking/improvingInfo',
+        url: 'http://127.0.0.1:8080/booking/applyFixedCourt',
         data: {
-          user_id:getApp().globalData.userInfo.userId,
-          wechatNO: getApp().globalData.userInfo.userName,
-          identity_num:identityNum
+          user_id: getApp().globalData.userInfo.userId,
+          today_court_id:today_court_id,
+          day_of_week:day_of_week
         },
         header: {
-            'content-type': 'application/json'
+          'content-type': 'application/json'
         },
         success: function (res) {
-            console.log(res.data);
-           
+          console.log(res.data);
+          //getApp().globalData.userInfo = res.data;
         }
-    });
-    },
-    queryUsreInfo: function (username) {
-      wx.request({
-          url: 'http://127.0.0.1:8080/booking/getMyInfo',
-          data: {
-            //user_id:'6',
-            wechatNO: username
-          },
-          header: {
-              'content-type': 'application/json'
-          },
-          success: function (res) {
-              console.log(res.data);
-              getApp().globalData.userInfo = res.data;
-          }
       });
-  },
-  checkproperty:function(){
-    if(getApp().globalData.userInfo.property=="普通用户" || getApp().globalData.userInfo.property=="球队用户"){
-      this.setData({
-        check:false,
-        disabled:true
-      })
     }
-    if(getApp().globalData.userInfo.property=="普通用户"){
-      this.setData({
-        team:true
-      })
-    }
-  }
+  
   
     
   })

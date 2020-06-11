@@ -1,7 +1,10 @@
 package com.booking.service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -28,6 +31,8 @@ public class ScheduledTime1ServiceImpl implements ScheduledTime1Service {
 	
 	/*启动服务器后初始化 全局变量时间段表*/
 	protected List<ScheduledTimeTable1> scheduledList;
+	protected Map<Integer,ScheduledTimeTable1> scheduledMap = new HashMap<>();
+	
 	@PostConstruct
 	public void init() {
 		if(scheduledList == null) {
@@ -36,22 +41,31 @@ public class ScheduledTime1ServiceImpl implements ScheduledTime1Service {
 //				System.out.println(sdtime1.toString());
 //			}	
 		}
+		
+		for(ScheduledTimeTable1 item : scheduledList) {
+			scheduledMap.put(item.getTimeId(), item);
+		}
 	}
 	
 	//获取scheduledList项
 	public ScheduledTimeTable1 getItem(int index) {
-		return scheduledList.get(index);
+		return scheduledList.get(index-1);
 	}
 	
 	public Date concatTodayDate(Date date) {
 		Date newdate = new Date();
+		date.setYear(newdate.getYear());
+		date.setMonth(newdate.getMonth());
 		date.setDate(newdate.getDate());
-		System.out.println(date);
 		return date;
 	}
 	
 	public List<ScheduledTimeTable1> getScheduledList(){
 		return scheduledList;
+	}
+	
+	public Map<Integer,ScheduledTimeTable1> getScheduledMap(){
+		return scheduledMap;
 	}
 	
 	@Override

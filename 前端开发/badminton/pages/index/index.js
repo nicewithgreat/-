@@ -28,30 +28,10 @@ Page({
 
     //当日订场写入数据库
     bookTodayCourt: function () {
-        
-        
+            
     },
-    /*获取当日订场信息   改在wxlogin.js调用获取
-    getTodayCourt:function(){
-        wx.request({
-            url: 'http://127.0.0.1:8080/booking/getTodayCourtWithOtherInfo',
-            data: {
-              //user_id:'6',
-             // wechatNO: username
-            },
-            header: {
-                'content-type': 'application/json'
-            },
-            success: function (res) {
-                console.log(res.data);
-                getApp().globalData.todaycourt = res.data;
-                console.log(getApp().globalData.todaycourt);
-            }
-        });
-    },*/
     //将当日订场信息数据中的时间戳转为正常日期
     changeDate:function(){
-        //this.getTodayCourt()
         this.setData({
             todaycourt:getApp().globalData.todaycourt,
         })
@@ -63,6 +43,8 @@ Page({
         this.setData({
             todaycourt: data
         })
+        //getApp().globalData.todaycourt=data
+        //console.log(getApp().globalData.todaycourt)
     },
     //预订当日空闲场地
     bookTodayFreeCourt:function(){
@@ -70,7 +52,7 @@ Page({
             url: 'http://127.0.0.1:8080/booking/bookTodayFreeCourt',
             data: {
               user_id:getApp().globalData.userInfo.userId,
-              item:getApp().globalData.todaycourt[0]
+              todayCourt_id:'2'
             },
             header: {
                 'content-type': 'application/json'

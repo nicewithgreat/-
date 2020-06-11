@@ -54,7 +54,7 @@ Page({
                   //从数据库获取用户信息
                   that.queryUsreInfo(e.detail.userInfo.nickName);
                   that.getTodayCourt()
-                  //console.log("插入小程序登录用户信息成功！");
+                  console.log(e.detail.userInfo);
                   
                   //app.globalData.wechatNO = e.detail.userInfo.nickName;
                   //app.globalData.avatarUrl = e.detail.userInfo.avatarUrl

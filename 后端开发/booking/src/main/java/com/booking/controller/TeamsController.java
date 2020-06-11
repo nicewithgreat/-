@@ -27,3 +27,4 @@ public class TeamsController {
 		return t3service.getCollegeList();
 	}
 }
+

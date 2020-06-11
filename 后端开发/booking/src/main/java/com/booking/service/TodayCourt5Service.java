@@ -1,6 +1,7 @@
 package com.booking.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -20,4 +21,10 @@ public interface TodayCourt5Service {
 	List<TodayCourtTable5> selectByExample(TodayCourtTable5Example example);
 	
 	List<TodayCourtTable5> selectByExampleWith(TodayCourtTable5Example example);	
+	
+	public List<TodayCourtTable5> getTodayCourtList();
+	
+	public Map<Integer,TodayCourtTable5> getTodayCourtMap();
+	
+	public TodayCourtTable5 getTodayCourtByID(int ID);
 }

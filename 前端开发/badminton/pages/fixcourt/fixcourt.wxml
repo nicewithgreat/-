@@ -1,17 +1,27 @@
 <l-tabs bind:linchange="changeTabs" placement="top" >
+
 <l-tabpanel tab="固定场申请" key="one" slot="one">
-    <l-form name="user" l-form-btn-class="l-form-btn-class" bind:linsubmit="submit">
-    <l-form-item label="周：" name="userName">
-        <l-input id="userName" value="{{user.userName}}" hide-label show-row="{{false}}" disabled="{{true}}" placeholder="{{user.userName}}"/>
+    <l-form name="fixcourt" l-form-btn-class="l-form-btn-class" bind:linsubmit="submit">
+    <l-form-item label="时间：" name="day">
+        <l-input id="day" value="{{fixcourt.day}}" hide-label show-row="{{false}}" disabled="{{false}}" placeholder="周一到周日"/>
     </l-form-item>
 
-    <l-form-item label="时间段：" name="identity_num">
-        <l-input id="identity_num" value="{{user.identity_num}}" hide-label show-row="{{false}}" disabled="{{disabled}}"  />
+    <l-form-item label="时间段：" name="time" label-placement="row">
+        <l-radio-group current="{{time}}" id="time" placement="row">
+            <l-radio key="1">
+                17:30-19:30
+            </l-radio>
+            <text decode="{{true}}">&nbsp;</text>
+            <l-radio key="2">
+                19:30-22:00
+            </l-radio>
+        </l-radio-group>
     </l-form-item>
 
-    <l-form-item label="用户身份：" name="property">
-    <l-input id="property" value="{{user.property}}" hide-label show-row="{{false}}" disabled="{{true}}"  placeholder="{{user.property}}"/>
+    <l-form-item label="场地号：" name="court">
+    <l-input id="court" value="{{fixcourt.court}}" hide-label show-row="{{false}}" disabled="{{false}}" placeholder="一号场到八号场" />
     </l-form-item>
+
     
     <!--<picker id="college" bindchange="pickerChange" value="{{picker.college}}"  range="{{picker.arr}}">：{{picker.arr[picker.college]}}</picker>  -->
     <!--留空-->
@@ -20,28 +30,43 @@
      </view>
 
     <l-toast />
-    <view slot="submit" wx:if="{{check}}">
-        <l-button>完善</l-button>
+    <l-message />
+    <view slot="submit" >
+        <l-button>提交</l-button>
     </view>
-    <view slot="reset" wx:if="{{check}}">
+    <view slot="reset" >
         <l-button type="default" plain>重置</l-button>
     </view>
     
     </l-form>
 </l-tabpanel>
 <l-tabpanel tab="固定场更换" key="two" slot="two">
-<l-form name="user" l-form-btn-class="l-form-btn-class" bind:linsubmit="submitcollege">
-    <l-form-item  label="所属学院：" name="college">   
-    <l-input id="college" value="{{user.college}}" hide-label show-row="{{false}}" disabled="{{!team}}"  placeholder="请输入学院全称"/>
+<l-form name="fixcourt" l-form-btn-class="l-form-btn-class" bind:linsubmit="submitchange">
+    <l-form-item label="时间：" name="day">
+        <l-input id="day" value="{{fixcourt.day}}" hide-label show-row="{{false}}" disabled="{{false}}" placeholder="周一到周日"/>
     </l-form-item>
-    <view>
-    <text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
+
+    <l-form-item label="时间段：" name="time" label-placement="row">
+        <l-radio-group current="{{time}}" id="time" placement="row">
+            <l-radio key="0">
+                17:30-19:30
+            </l-radio>
+            <text decode="{{true}}">&nbsp;</text>
+            <l-radio key="1">
+                19:30-22:00
+            </l-radio>
+        </l-radio-group>
+    </l-form-item>
+
+    <l-form-item label="场地号：" name="court">
+    <l-input id="court" value="{{fixcourt.court}}" hide-label show-row="{{false}}" disabled="{{false}}" placeholder="一号场到八号场" />
+    </l-form-item>
+
+    <l-message />
+    <view slot="submit" >
+        <l-button>完善</l-button>
     </view>
-    <l-toast />
-    <view slot="submit" wx:if="{{team}}">
-        <l-button>提交</l-button>
-    </view>
-    <view slot="reset" wx:if="{{team}}">
+    <view slot="reset" >
         <l-button type="default" plain>重置</l-button>
     </view>
 </l-form>

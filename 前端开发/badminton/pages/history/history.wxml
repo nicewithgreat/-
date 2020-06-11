@@ -4,7 +4,8 @@
 </view>
 <view class="loading" wx:if="{{history==''}}">您暂无历史订场记录哦~</view>
 <!--历史信息卡片展示-->
-<l-card  wx:for="{{history}}" wx:key="index"
+<view wx:else>
+<l-card   wx:for="{{history}}" wx:key="index"
            type="primary" 
            l-img-class="right-card" 
            position="left" 
@@ -55,3 +56,4 @@
       </view>
     </view>
   </l-card>
+  </view>

@@ -58,6 +58,9 @@
     "l-collapse-item": "dist/collapse-item/index",
     "l-tag": "dist/tag/index",
     "l-loading": "dist/loading/index",
-    "l-dialog": "dist/dialog/index"
+    "l-dialog": "dist/dialog/index",
+    "l-radio-group":"dist/radio-group/index",
+    "l-radio":"dist/radio/index",
+    "l-message":"dist/message/index"
   }
 }

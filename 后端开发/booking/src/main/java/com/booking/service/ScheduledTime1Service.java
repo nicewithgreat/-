@@ -2,6 +2,7 @@ package com.booking.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.booking.pojo.ScheduledTimeTable1;
 import com.booking.pojo.ScheduledTimeTable1Example;
@@ -18,6 +19,8 @@ public interface ScheduledTime1Service {
 	
 	//////////
 	public ScheduledTimeTable1 getItem(int index);
+	
 	public Date concatTodayDate(Date date);
 	
+	public Map<Integer,ScheduledTimeTable1> getScheduledMap();
 }
