@@ -44,6 +44,43 @@ Page({
     
 
   },
+  
+  //调用后台提交用户信息函数
+  improvingInfo: function (identityNum) {
+    var that=this
+    wx.request({
+      url: 'http://127.0.0.1:8080/booking/improvingInfo',
+      data: {
+        user_id: getApp().globalData.userInfo.userId,
+        wechatNO: getApp().globalData.userInfo.userName,
+        identity_num: identityNum
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data);
+        that.queryUsreInfo();       
+      }
+    });
+    that.onLoad()
+  },
+  //调用后台查看用户信息函数
+  queryUsreInfo: function () {
+    wx.request({
+      url: 'http://127.0.0.1:8080/booking/getMyInfo',
+      data: {
+        wechatNO: getApp().globalData.userInfo.userName
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data);
+        getApp().globalData.userInfo = res.data;
+      }
+    });
+  },
   //球队用户申请事件
   submitcollege: function (e) {
     const {
@@ -100,42 +137,6 @@ Page({
       }
     });
     
-  },
-  //调用后台提交用户信息函数
-  improvingInfo: function (identityNum) {
-    var that=this
-    wx.request({
-      url: 'http://127.0.0.1:8080/booking/improvingInfo',
-      data: {
-        user_id: getApp().globalData.userInfo.userId,
-        wechatNO: getApp().globalData.userInfo.userName,
-        identity_num: identityNum
-      },
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        console.log(res.data);
-        that.queryUsreInfo();       
-      }
-    });
-    that.onLoad()
-  },
-  //调用后台查看用户信息函数
-  queryUsreInfo: function () {
-    wx.request({
-      url: 'http://127.0.0.1:8080/booking/getMyInfo',
-      data: {
-        wechatNO: getApp().globalData.userInfo.userName
-      },
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        console.log(res.data);
-        getApp().globalData.userInfo = res.data;
-      }
-    });
   },
   //验证用户身份
   checkproperty: function () {

@@ -17,9 +17,13 @@ Page({
     for (var i = 0; i < data.length; i++) {      
         data[i].bookDate = time.formatTimeTwo(data[i].bookDate,'Y/M/D h:m:s')      
     }
+    if(data!=''){
+      data.reverse()
+    }
     this.setData({
       history: data
     })
+    
   }
   
 })

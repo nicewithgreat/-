@@ -21,7 +21,7 @@ Page({
                         var nickName = userInfo.nickName
                         //从数据库获取用户信息
                         that.queryUsreInfo(nickName);
-                        that.getTodayCourt()
+                        //that.getTodayCourt()
                         //用户已经授权过
                         wx.switchTab({
                             url: '/pages/index/index',
@@ -53,7 +53,7 @@ Page({
               success: function (res) {
                   //从数据库获取用户信息
                   that.queryUsreInfo(e.detail.userInfo.nickName);
-                  that.getTodayCourt()
+                  //that.getTodayCourt()
                   console.log(e.detail.userInfo);
                   
                   //app.globalData.wechatNO = e.detail.userInfo.nickName;
@@ -101,7 +101,7 @@ Page({
           }
       });
   },
-  //获取当日订场信息
+  /*获取当日订场信息
   getTodayCourt:function(){
     wx.request({
         url: 'http://127.0.0.1:8080/booking/getTodayCourtWithOtherInfo',
@@ -117,6 +117,6 @@ Page({
             getApp().globalData.todaycourt = res.data;
         }
     });
-},
+},*/
   
 })

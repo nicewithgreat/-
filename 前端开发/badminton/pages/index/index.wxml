@@ -1,106 +1,74 @@
 <l-notice-bar show="{{true}}" type="roll" speed="700" front-icon-name="notification" front-icon-size="30" front-icon-color="#3683D6">每日订场于中午12:00开始，场地时间段为17:30-19：30以及19:30-22:00,请根据具体情况订场，每日每人限订一个场地，谢谢支持</l-notice-bar>
 <l-dialog />
-<view>已订场</view>
-
+<l-tabs bind:linchange="changeTabs" active-key="{{zero}}">
+	<l-tabpanel tab="已订场" key="zero" slot="zero">
+<!--已订场-->
 <l-card type="primary" image="/images/2.jpg" title="塑胶一号场">
 		<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
 			<view class="content" wx:if="{{todaycourt[0].courtState==0}}">
 				17:30-19:30：空闲	<text decode="{{true}}">&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain width="40" height="40" bindtap="bookTodayFreeCourt">预定</l-button>
+				<l-button type="default"  bindtap="showDialog" plain width="40" height="40" >预定</l-button>
 			</view>
 			<view class="content" wx:elif="{{todaycourt[0].courtState==1}}">
 				17:30-19:30：已订	<text decode="{{true}}">&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain width="30" height="40">预定</l-button>
+				<l-button type="default"  bindtap="showDialog" plain width="30" height="40">预定</l-button>
 			</view>
 			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
 			<view class="content" wx:if="{{todaycourt[8].courtState==0}}">
 				19:30-22:00：空闲	<text decode="{{true}}">&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain width="30" height="40" >预定</l-button>
+				<l-button type="default"  bindtap="showDialog" plain width="30" height="40" >预定</l-button>
 			</view>
 			<view class="content" wx:elif="{{todaycourt[8].courtState==1}}">
 				19:30-22:00：已订	<text decode="{{true}}">&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain width="30" height="40">预定</l-button>
-			</view>
-		</l-card>
-<l-tabs bind:linchange="changeTabs" active-key="{{one}}">
-	<l-tabpanel tab="塑胶场地" key="one" slot="one">
-		<l-card type="primary" image="/images/2.jpg" title="塑胶一号场">
-			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-			<view class="content" wx:if="{{todaycourt[0].courtState==0}}">
-				17:30-19:30：空闲 <text decode="{{true}}">&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain width="40" height="40" bindtap="bookTodayFreeCourt">预定</l-button>
-			</view>
-			<view class="content" wx:elif="{{todaycourt[0].courtState==1}}">
-				17:30-19:30：已订 <text decode="{{true}}">&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain width="30" height="40">预定</l-button>
-			</view>
-			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-			<view class="content" wx:if="{{todaycourt[8].courtState==0}}">
-				19:30-22:00：空闲 <text decode="{{true}}">&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain width="30" height="40">预定</l-button>
-			</view>
-			<view class="content" wx:elif="{{todaycourt[8].courtState==1}}">
-				19:30-22:00：已订 <text decode="{{true}}">&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain width="30" height="40">预定</l-button>
-			</view>
-		</l-card>
-		<l-card type="primary" image="/images/2.jpg" title="塑胶二号场">
-			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-			<view class="content">
-				场地状态：空闲
-				<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain>预定此场地</l-button>
-			</view>
-		</l-card>
-		<l-card type="primary" image="/images/2.jpg" title="塑胶三号场">
-			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-			<view class="content">
-				场地状态：空闲
-				<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain>预定此场地</l-button>
-			</view>
-		</l-card>
-		<l-card type="primary" image="/images/2.jpg" title="塑胶四号场">
-			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-			<view class="content">
-				场地状态：空闲
-				<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain>预定此场地</l-button>
+				<l-button type="default"  bindtap="showDialog" plain width="30" height="40">预定</l-button>
 			</view>
 		</l-card>
 	</l-tabpanel>
-
+</l-tabs>
+<!--塑胶场地-->
+<l-tabs bind:linchange="changeTabs" active-key="{{one}}">
+	<l-tabpanel tab="塑胶场地" >
+		<l-card wx:for="{{tcourt1}}" wx:key="index" type="primary" image="/images/2.jpg" title="{{item.courtname}}">
+			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
+			<view class="content" wx:if="{{item.state1==0 }}">
+				17:30-19:30：空闲 <text decode="{{true}}">&nbsp;</text>
+				<l-button type="default"  bind:lintap="showDialog" plain width="40" height="40" data-timeid="{{item.time1}}" data-courtid="{{item.courtid}}">预定</l-button>
+			</view>
+			<view class="content" wx:elif="{{item.state1==1 }}">
+				17:30-19:30：已订 <text decode="{{true}}">&nbsp;</text>
+				<l-button type="default"   plain width="30" height="40" disabled="{{true}}">预定</l-button>
+			</view>
+			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
+			<view class="content" wx:if="{{item.state2==0 }}">
+				19:30-22:00：空闲 <text decode="{{true}}">&nbsp;</text>
+				<l-button type="default"  bind:lintap="showDialog" plain width="30" height="40" data-timeid="{{item.time2}}" data-courtid="{{item.courtid}}">预定</l-button>
+			</view>
+			<view class="content" wx:elif="{{item.state2==1 }}">
+				19:30-22:00：已订 <text decode="{{true}}">&nbsp;</text>
+				<l-button type="default"   plain width="30" height="40" disabled="{{true}}">预定</l-button>
+			</view>
+		</l-card>
+	</l-tabpanel>
+<!--水泥场地-->
 	<l-tabpanel tab="水泥场地" key="two" slot="two">
-		<l-card type="primary" image="/images/3.jpg" title="水泥五号场">
+		<l-card wx:for="{{tcourt2}}" wx:key="index" type="primary" image="/images/2.jpg" title="{{item.courtid}}">
 			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-			<view class="content">
-				场地状态：空闲
-				<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain>预定此场地</l-button>
+			<view class="content" wx:if="{{item.state1==0 }}">
+				17:30-19:30：空闲 <text decode="{{true}}">&nbsp;</text>
+				<l-button type="default"  bind:lintap="showDialog" plain width="40" height="40" data-timeid="{{item.time1}}" data-courtid="{{item.courtid}}">预定</l-button>
 			</view>
-		</l-card>
-		<l-card type="primary" image="/images/3.jpg" title="水泥六号场">
-			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-			<view class="content">
-				场地状态：空闲
-				<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain>预定此场地</l-button>
+			<view class="content" wx:elif="{{item.state1==1 }}">
+				17:30-19:30：已订 <text decode="{{true}}">&nbsp;</text>
+				<l-button type="default"   plain width="30" height="40" disabled="{{true}}">预定</l-button>
 			</view>
-		</l-card>
-		<l-card type="primary" image="/images/3.jpg" title="水泥七号场">
 			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-			<view class="content">
-				场地状态：空闲
-				<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain>预定此场地</l-button>
+			<view class="content" wx:if="{{item.state2==0 }}">
+				19:30-22:00：空闲 <text decode="{{true}}">&nbsp;</text>
+				<l-button type="default"  bind:lintap="showDialog" plain width="30" height="40" data-timeid="{{item.time2}}" data-courtid="{{item.courtid}}">预定</l-button>
 			</view>
-		</l-card>
-		<l-card type="primary" image="/images/3.jpg" title="水泥八号场">
-			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-			<view class="content">
-				场地状态：空闲
-				<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-				<l-button type="default" key="one" slot="one" bindtap="showDialog" plain>预定此场地</l-button>
+			<view class="content" wx:elif="{{item.state2==1 }}">
+				19:30-22:00：已订 <text decode="{{true}}">&nbsp;</text>
+				<l-button type="default"  plain width="30" height="40" disabled="{{true}}">预定</l-button>
 			</view>
 		</l-card>
 	</l-tabpanel>
