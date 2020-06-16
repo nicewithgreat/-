@@ -80,6 +80,26 @@ Page({
             })
         }
     },
+    //判断是否是游客，不能订场
+    checktourist:function(){
+        var property=getApp().globalData.userInfo.property
+        if(property=='游客' ||property=='游客待审核'){
+            this.setData({
+                disabled:true
+            })
+            wx.lin.showDialog({
+                type: "alert",
+                title: "提醒",
+                content: "完善好个人信息才能订场哦~",
+                success: (res) => {
+                    if (res.confirm) {
+                        //调用后台函数把信息写入数据库
+                        console.log('用户点击了确定')
+                    }
+                }
+            })
+        }
+    },
     //获取当日订场信息
     getTodayCourt:function(){
         var that=this
@@ -142,6 +162,7 @@ Page({
             tcourt2:tcourt2,
         })
         this.checktime()
+        this.checktourist()
          
         
     },
@@ -209,6 +230,7 @@ Page({
             })
         }
         this.checktime()
+        this.checktourist()
         
     },
     //预订当日空闲场地
