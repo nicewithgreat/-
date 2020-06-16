@@ -14,9 +14,8 @@ Page({
 
   onLoad: function () {
     wx.lin.initValidateForm(this)
-   
-    this.checkproperty()
-    this.getcollege()
+  
+    this.queryUsreInfo()
   },
   onShow:function(){
    
@@ -67,6 +66,7 @@ Page({
   },
   //调用后台查看用户信息函数
   queryUsreInfo: function () {
+    var that=this
     wx.request({
       url: 'http://127.0.0.1:8080/booking/getMyInfo',
       data: {
@@ -78,6 +78,7 @@ Page({
       success: function (res) {
         console.log(res.data);
         getApp().globalData.userInfo = res.data;
+        that.getcollege()
       }
     });
   },
@@ -151,6 +152,11 @@ Page({
         team: true
       })
     }
+    if(getApp().globalData.userInfo.property == "普通用户待审核"){
+      this.setData({
+        team: false
+      })
+    }
     
   },
   //验证是否球队用户身份提示信息
@@ -184,6 +190,7 @@ Page({
         college:college
       }
     })
+    this.checkproperty()
   }
 
 })

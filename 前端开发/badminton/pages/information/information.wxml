@@ -16,7 +16,8 @@
 		<view class="inputView">
 			<l-list title="个人信息" icon="user" left-gap="10" bind:lintap="me" />
 			<l-list title="历史订场信息" icon="time" left-gap="10" bind:lintap="history" />
-			<l-list wx:if="{{team}}" title="球队固定场申请" icon="order" left-gap="10" bind:lintap="fixcourt" />
+			<l-message />
+			<l-list title="球队固定场申请" icon="order" left-gap="10" bind:lintap="fixcourt" />
 			
 			<l-list title="帮助" icon="help" left-gap="10" bindtap="showDialog" />
 		</view>

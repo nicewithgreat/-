@@ -1,13 +1,12 @@
+<l-dialog />
 <l-tabs bind:linchange="changeTabs" placement="top" >
-
 <l-tabpanel tab="固定场申请" key="one" slot="one">
-    <l-form name="fixcourt" l-form-btn-class="l-form-btn-class" bind:linsubmit="submit">
+    <l-form name="applyfixcourt" l-form-btn-class="l-form-btn-class" bind:linsubmit="submit">
     <l-form-item label="时间：" name="day">
-        <l-input id="day" value="{{fixcourt.day}}" hide-label show-row="{{false}}" disabled="{{disabled}}" placeholder="周一到周日"/>
+        <l-input id="day" value="{{applyfixcourt.day}}" hide-label show-row="{{false}}" disabled="{{disabled}}" placeholder="周一到周日"/>
     </l-form-item>
-
     <l-form-item label="时间段：" name="time" label-placement="row">
-        <l-radio-group current="{{fixcourt.time}}" id="time" placement="row">
+        <l-radio-group current="{{applyfixcourt.time}}" id="time" placement="row">
             <l-radio key="1" disabled="{{disabled}}">
                 17:30-19:30
             </l-radio>
@@ -17,38 +16,35 @@
             </l-radio>
         </l-radio-group>
     </l-form-item>
-
-    <l-form-item label="场地号：" name="court">
-    <l-input id="court" value="{{fixcourt.court}}" hide-label show-row="{{false}}" disabled="{{disabled}}" placeholder="一号场到八号场" />
+    <l-form-item label="场地号：" name="court" >
+    <l-input id="court" value="{{applyfixcourt.court}}" hide-label show-row="{{false}}" disabled="{{disabled}}" placeholder="一号场到八号场" />
     </l-form-item>
 
-    
-    <!--<picker id="college" bindchange="pickerChange" value="{{picker.college}}"  range="{{picker.arr}}">：{{picker.arr[picker.college]}}</picker>  -->
-    <!--留空-->
+    <l-form-item label="申请状态：" name="state" wx:if="{{state!=''}}">
+    <l-input id="state" value="{{state}}" hide-label show-row="{{false}}" disabled="{{true}}" placeholder="{{state}}" />
+    </l-form-item>
      <view>
      <text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
      </view>
 
-    <l-toast />
-    <l-message />
-    <view slot="submit" wx:if="{{fixcourt.day==''}}">
+    <view slot="submit" wx:if="{{!disabled}}">
         <l-button>提交</l-button>
     </view>
-    <view slot="reset" wx:if="{{fixcourt.day==''}}">
+    <view slot="reset" wx:if="{{!disabled}}">
         <l-button type="default" plain>重置</l-button>
-    </view>
-    
+    </view>   
     </l-form>
+    <l-button type="default" size="long" wx:if="{{exit}}" bind:lintap="exitcourt">退还固定场</l-button>
 </l-tabpanel>
-<l-tabpanel tab="固定场更换" key="two" slot="two" bindtap="toast" data-day="{{fixcourt.day}}" data-disabledC="{{disabledC}}">
+<l-tabpanel tab="固定场更换" key="two" slot="two" bindtap="toast" data-state="{{state}}" >
 <l-toast />
-<l-form name="fixcourtchange" l-form-btn-class="l-form-btn-class" bind:linsubmit="submitchange">
+<l-form name="changefixcourt" l-form-btn-class="l-form-btn-class" bind:linsubmit="submitchange">
     <l-form-item label="时间：" name="day1">
-    <l-input id="day1" value="{{fixcourt.day}}" hide-label show-row="{{false}}" disabled="{{disabledC}}" placeholder="周一到周日"/>
+    <l-input id="day1" value="{{changefixcourt.day}}" hide-label show-row="{{false}}" disabled="{{disabledC}}" placeholder="周一到周日"/>
     </l-form-item>
 
     <l-form-item label="时间段：" name="time1" label-placement="row">
-        <l-radio-group current="{{fixcourt.time}}" id="time1" placement="row">
+        <l-radio-group current="{{changefixcourt.time}}" id="time1" placement="row">
             <l-radio key="1" disabled="{{disabledC}}">
                 17:30-19:30
             </l-radio>
@@ -60,23 +56,27 @@
     </l-form-item>
 
     <l-form-item label="场地号：" name="court1">
-    <l-input id="court1" value="{{fixcourt.court}}" hide-label show-row="{{false}}" disabled="{{disabledC}}" placeholder="一号场到八号场" />
+    <l-input id="court1" value="{{changefixcourt.court}}" hide-label show-row="{{false}}" disabled="{{disabledC}}" placeholder="一号场到八号场" />
+    </l-form-item>
+
+    <l-form-item label="申请状态：" name="state" wx:if="{{state=='换场待审核'}}">
+    <l-input id="state" value="{{state}}" hide-label show-row="{{false}}" disabled="{{true}}" placeholder="{{state}}" />
     </l-form-item>
 
      <view>
      <text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
      </view>
 
-    <l-toast />
-    <l-message />
-    <view slot="submit" wx:if="{{fixcourt.day!=''}}">
+   
+    <view slot="submit" wx:if="{{!disabledC}}">
         <l-button>提交</l-button>
     </view>
-    <view slot="reset" wx:if="{{fixcourt.day!=''}}">
+    <view slot="reset" wx:if="{{!disabledC}}">
         <l-button type="default" plain>重置</l-button>
     </view>
     
     </l-form>
+    
 </l-tabpanel>
        
 </l-tabs>

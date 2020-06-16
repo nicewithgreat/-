@@ -2,26 +2,36 @@
 <l-dialog />
 <l-tabs bind:linchange="changeTabs" active-key="{{zero}}">
 	<l-tabpanel tab="已订场" key="zero" slot="zero">
+	<view class="imagesize" wx:if="{{booking=='' || (booking!='' && booking.bookState==1)}}">
+  	<image src="/images/nohistory.gif" class='in-image'></image>
+		<view class="loading" wx:if="{{booking=='' || (booking!='' && booking.bookState==1)}}">今天您暂无有效订场记录哦~</view>
+	</view>
+	
 <!--已订场-->
-<l-card type="primary" image="/images/2.jpg" title="塑胶一号场">
-		<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-			<view class="content" wx:if="{{todaycourt[0].courtState==0}}">
-				17:30-19:30：空闲	<text decode="{{true}}">&nbsp;</text>
-				<l-button type="default"  bindtap="showDialog" plain width="40" height="40" >预定</l-button>
-			</view>
-			<view class="content" wx:elif="{{todaycourt[0].courtState==1}}">
-				17:30-19:30：已订	<text decode="{{true}}">&nbsp;</text>
-				<l-button type="default"  bindtap="showDialog" plain width="30" height="40">预定</l-button>
-			</view>
-			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
-			<view class="content" wx:if="{{todaycourt[8].courtState==0}}">
-				19:30-22:00：空闲	<text decode="{{true}}">&nbsp;</text>
-				<l-button type="default"  bindtap="showDialog" plain width="30" height="40" >预定</l-button>
-			</view>
-			<view class="content" wx:elif="{{todaycourt[8].courtState==1}}">
-				19:30-22:00：已订	<text decode="{{true}}">&nbsp;</text>
-				<l-button type="default"  bindtap="showDialog" plain width="30" height="40">预定</l-button>
-			</view>
+		<l-card  wx:if="{{booking!='' && booking.bookState!=1}}" type="primary" image="/images/2.jpg" title="订场时间：">
+				<view class="content0">
+					{{booking.bookDate}}
+				</view>	
+				<view class="content0" wx:if="{{booking.courtId<=4}}">
+					场地：塑胶{{booking.courtId}}号场		
+				</view>
+				<view class="content0" wx:if="{{booking.courtId>4}}">
+					场地：水泥{{booking.courtId}}号场		
+				</view>
+				<view class="content0" wx:if="{{booking.timeId==1}}">
+					时间段：17:30-19:30		
+				</view>
+				<view class="content0" wx:if="{{booking.timeId==2}}">
+					时间段：19:30-22:00	
+				</view>
+			
+				<view class="content" wx:if="{{booking.bookState==0}}">
+					<l-button type="warning"  bindtap="changecourt"  data-bookid="{{booking.bookId}}" data-courtid="{{booking.courtId}}" data-timeid="{{booking.timeId}}" width="160" height="60">换场</l-button>
+					<text decode="{{true}}">&nbsp;&nbsp;</text>
+					<l-button type="error"  bindtap="exitcourt"  data-bookid="{{booking.bookId}}" width="160" height="60">退场</l-button>
+				</view>
+				<view class="content" wx:if="{{booking.bookState==2}}">订场状态：换场审核中</view>
+				<view class="content" wx:if="{{booking.bookState==3}}">订场状态：退场审核中</view>
 		</l-card>
 	</l-tabpanel>
 </l-tabs>
@@ -32,43 +42,43 @@
 			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
 			<view class="content" wx:if="{{item.state1==0 }}">
 				17:30-19:30：空闲 <text decode="{{true}}">&nbsp;</text>
-				<l-button type="default"  bind:lintap="showDialog" plain width="40" height="40" data-timeid="{{item.time1}}" data-courtid="{{item.courtid}}">预定</l-button>
+				<l-button type="warning"  bind:lintap="showDialog"  width="40" height="40" data-timeid="{{item.time1}}" data-courtid="{{item.courtid}}" disabled="{{disabled}}">预定</l-button>
 			</view>
 			<view class="content" wx:elif="{{item.state1==1 }}">
 				17:30-19:30：已订 <text decode="{{true}}">&nbsp;</text>
-				<l-button type="default"   plain width="30" height="40" disabled="{{true}}">预定</l-button>
+				<l-button type="warning"    width="30" height="40" disabled="{{true}}">预定</l-button>
 			</view>
 			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
 			<view class="content" wx:if="{{item.state2==0 }}">
 				19:30-22:00：空闲 <text decode="{{true}}">&nbsp;</text>
-				<l-button type="default"  bind:lintap="showDialog" plain width="30" height="40" data-timeid="{{item.time2}}" data-courtid="{{item.courtid}}">预定</l-button>
+				<l-button type="warning"  bind:lintap="showDialog"  width="30" height="40" data-timeid="{{item.time2}}" data-courtid="{{item.courtid}}" disabled="{{disabled}}">预定</l-button>
 			</view>
 			<view class="content" wx:elif="{{item.state2==1 }}">
 				19:30-22:00：已订 <text decode="{{true}}">&nbsp;</text>
-				<l-button type="default"   plain width="30" height="40" disabled="{{true}}">预定</l-button>
+				<l-button type="warning"    width="30" height="40" disabled="{{true}}">预定</l-button>
 			</view>
 		</l-card>
 	</l-tabpanel>
 <!--水泥场地-->
 	<l-tabpanel tab="水泥场地" key="two" slot="two">
-		<l-card wx:for="{{tcourt2}}" wx:key="index" type="primary" image="/images/2.jpg" title="{{item.courtid}}">
+		<l-card wx:for="{{tcourt2}}" wx:key="index" type="primary" image="/images/2.jpg" title="{{item.courtname}}">
 			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
 			<view class="content" wx:if="{{item.state1==0 }}">
 				17:30-19:30：空闲 <text decode="{{true}}">&nbsp;</text>
-				<l-button type="default"  bind:lintap="showDialog" plain width="40" height="40" data-timeid="{{item.time1}}" data-courtid="{{item.courtid}}">预定</l-button>
+				<l-button type="warning"  bind:lintap="showDialog"  width="40" height="40" data-timeid="{{item.time1}}" data-courtid="{{item.courtid}}" disabled="{{disabled}}">预定</l-button>
 			</view>
 			<view class="content" wx:elif="{{item.state1==1 }}">
 				17:30-19:30：已订 <text decode="{{true}}">&nbsp;</text>
-				<l-button type="default"   plain width="30" height="40" disabled="{{true}}">预定</l-button>
+				<l-button type="warning"    width="30" height="40" disabled="{{true}}">预定</l-button>
 			</view>
 			<text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
 			<view class="content" wx:if="{{item.state2==0 }}">
 				19:30-22:00：空闲 <text decode="{{true}}">&nbsp;</text>
-				<l-button type="default"  bind:lintap="showDialog" plain width="30" height="40" data-timeid="{{item.time2}}" data-courtid="{{item.courtid}}">预定</l-button>
+				<l-button type="warning"  bind:lintap="showDialog"  width="30" height="40" data-timeid="{{item.time2}}" data-courtid="{{item.courtid}}" disabled="{{disabled}}">预定</l-button>
 			</view>
 			<view class="content" wx:elif="{{item.state2==1 }}">
 				19:30-22:00：已订 <text decode="{{true}}">&nbsp;</text>
-				<l-button type="default"  plain width="30" height="40" disabled="{{true}}">预定</l-button>
+				<l-button type="warning"   width="30" height="40" disabled="{{true}}">预定</l-button>
 			</view>
 		</l-card>
 	</l-tabpanel>

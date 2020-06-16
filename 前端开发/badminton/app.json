@@ -5,7 +5,10 @@
     "pages/information/information",
     "pages/me/me",
     "pages/history/history",
-    "pages/fixcourt/fixcourt"
+    "pages/fixcourt/fixcourt",
+    "pages/changecourt/changecourt",
+    "pages/exitcourt/exitcourt"
+    
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -61,6 +64,8 @@
     "l-dialog": "dist/dialog/index",
     "l-radio-group":"dist/radio-group/index",
     "l-radio":"dist/radio/index",
-    "l-message":"dist/message/index"
+    "l-message":"dist/message/index",
+    "l-textarea":"dist/textarea/index"
   }
+  
 }

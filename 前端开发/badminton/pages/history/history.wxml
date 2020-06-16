@@ -48,6 +48,12 @@
       <view class="view" wx:elif="{{item.bookState==1}}">
       订场状态：已退场
       </view>
+      <view class="view" wx:elif="{{item.bookState==2}}">
+      订场状态：换场审核中
+      </view>
+      <view class="view" wx:elif="{{item.bookState==3}}">
+      订场状态：退场审核中
+      </view>
       <view class="view1" wx:if="{{item.timeId==1}}">
       订场时间段：17:30-19:30
       </view>

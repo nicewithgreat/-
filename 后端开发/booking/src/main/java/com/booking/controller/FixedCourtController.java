@@ -7,14 +7,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.booking.dao.ApplyFixedTable7Mapper;
-import com.booking.dao.TeamTable3Mapper;
+import com.booking.pojo.ApplyChangeTable8;
+import com.booking.pojo.ApplyChangeTable8Example;
 import com.booking.pojo.ApplyFixedTable7;
 import com.booking.pojo.ApplyFixedTable7Example;
+import com.booking.pojo.ApplyUnsubscribeTable6;
+import com.booking.pojo.ApplyUnsubscribeTable6Example;
 import com.booking.pojo.TeamTable3;
 import com.booking.pojo.TeamTable3Example;
 import com.booking.pojo.UserTable2;
 import com.booking.pojo.UserTable2Example;
+import com.booking.service.ApplyChange8Service;
 import com.booking.service.ApplyFixed7Service;
 import com.booking.service.ApplyUnsubscribe6Service;
 import com.booking.service.Team3Service;
@@ -35,6 +38,10 @@ public class FixedCourtController {
 	UserTable2Service ut2service;
 	@Autowired
 	Team3Service tt3service;
+	@Autowired
+	ApplyChange8Service ac8service;
+	@Autowired
+	ApplyUnsubscribe6Service au6service;
 	
 	/*
 	 * 判断是不是球队用户
@@ -87,7 +94,27 @@ public class FixedCourtController {
 		}
 		return list.get(0);
 	}
-	
+	/*
+	  * 球队成员获取历史 申请固定场表
+	  * state:
+	  * -1:查找全部
+	  * -2:查找不包含已退
+	  * 其他为找单状态
+	  */
+	 @RequestMapping("/ApplyFixedCourtListByUser")
+	 @ResponseBody
+	 public Object ApplyFixedCourtListByUser(int user_id,int state) {
+	  ApplyFixedTable7Example example = new ApplyFixedTable7Example();
+	  ApplyFixedTable7Example.Criteria criteria = example.createCriteria(); 
+	  criteria.andUserIdEqualTo(user_id);
+	  if(state == -2) {
+	   criteria.andApplyStateNotEqualTo(2);//不包含已退
+	  }else if(state != -1) {
+	   criteria.andApplyStateEqualTo(state);//找单状态的
+	  }
+	  
+	  return af7service.selectByExample(example);
+	 }
 	
 	
 	/*
@@ -95,10 +122,20 @@ public class FixedCourtController {
 	 * 
 	 */
 	@RequestMapping("/applyFixedCourt")
-	@ResponseBody
-	public int applyFixedCourt(int user_id,int today_court_id,int day_of_week) {
-		return insertapplyFixedCourt(user_id,today_court_id,day_of_week,0);
-	}
+	 @ResponseBody
+	 public int applyFixedCourt(int user_id,int today_court_id,int day_of_week) {
+	  ApplyFixedTable7Example example = new ApplyFixedTable7Example();
+	  ApplyFixedTable7Example.Criteria criteria = example.createCriteria();
+	  criteria.andApplyStateNotEqualTo(2);//不是已退
+	  criteria.andUserIdEqualTo(user_id);
+	  
+	  if(af7service.selectByExample(example).isEmpty()) {
+	   return insertapplyFixedCourt(user_id,today_court_id,day_of_week,0);
+	  }else {
+	   return -1;
+	  }
+	  
+	 }
 	
 	
 	/*
@@ -140,24 +177,212 @@ public class FixedCourtController {
 	}
 	
 	/*
-	 * 申请更换固定场
+	 * 申请更换固定场(更新)
+	 * user_id, 用户id
+	 * int change_fixedCourt, 要更换的固定场申请表编号
+	 * int today_court_id, 要更换固定场的当天场次
+	 * int day_of_week, 是星期几
+	 * 
+	 *return:{
+	 *	0:申请失败
+	 *	1:申请成功
+	 *	-2:请求数据错误
+	 *}
 	 */
 	@RequestMapping("/applyChangeFixedCourt")
 	@ResponseBody
-	public int applyChangeFixedCourt(int user_id,int today_court_id,int day_of_week) {
-		return insertapplyFixedCourt(user_id,today_court_id,day_of_week,3);//3:更换场地未审核
+	public int applyChangeFixedCourt(int user_id,int change_fixedCourt, int today_court_id,int day_of_week) {
+		//弃用//return insertapplyFixedCourt(user_id,today_court_id,day_of_week,3);//3:更换场地未审核
+		
+		//检查请求数据是否有效		
+		ApplyFixedTable7Example example = new ApplyFixedTable7Example();
+		ApplyFixedTable7Example.Criteria criteria = example.createCriteria();
+		criteria.andApplyFixedIdEqualTo(change_fixedCourt);
+		criteria.andUserIdEqualTo(user_id);
+		
+		if(af7service.selectByExample(example).isEmpty()) {
+			//找不到，请求数据出错
+			return -2;
+		}
+
+		//申请固定场表状态，设置为3.换场未审核
+		ApplyFixedTable7Example af7example = new ApplyFixedTable7Example();
+		ApplyFixedTable7Example.Criteria af7criteria = af7example.createCriteria();
+		af7criteria.andApplyFixedIdEqualTo(change_fixedCourt);
+		
+		ApplyFixedTable7 af7record = new ApplyFixedTable7();
+		af7record.setApplyState(3);//换场未审核
+		
+		af7service.updateByExampleSelective(af7record , af7example);
+		
+		//插入申请换场表
+		ApplyChangeTable8 record = new ApplyChangeTable8();
+		record.setUserId(user_id);
+		record.setBookId(change_fixedCourt);//以前固定场申请编号
+		record.setCourtId(today_court_id);//当天场次
+		record.setTimeId(day_of_week);//周几
+		record.setApplyState(3);//球队用户：未审核
+		return ac8service.insertSelective(record);
+	}
+
+	
+	/*
+	 * 申请退还固定场
+	 * user_id, 用户id
+	 * int fixedCourt_id, 要更换的固定场申请表编号
+	 * 
+	 *return:{
+	 *	0:申请失败
+	 *	1:申请成功
+	 *	-2:请求数据错误
+	 *}
+	 */
+	@RequestMapping("/applyUnsubscribeFixedCourt")
+	@ResponseBody
+	public int applyUnsubscribeFixedCourt(int user_id,int unsubscribe_fixedCourt,String reason) {
+		//检查请求数据是否有效		
+		ApplyFixedTable7Example example = new ApplyFixedTable7Example();
+		ApplyFixedTable7Example.Criteria criteria = example.createCriteria();
+		criteria.andApplyFixedIdEqualTo(unsubscribe_fixedCourt);
+		criteria.andUserIdEqualTo(user_id);
+		
+		if(af7service.selectByExample(example).isEmpty()) {
+			//找不到，请求数据出错
+			return -2;
+		}
+
+		//申请固定场表状态，设置为4.换场未审核
+		ApplyFixedTable7 af7record = new ApplyFixedTable7();
+		af7record.setApplyState(4);//退场未审核
+		
+		ApplyFixedTable7Example af7example = new ApplyFixedTable7Example();
+		ApplyFixedTable7Example.Criteria af7criteria = af7example.createCriteria();
+		af7criteria.andApplyFixedIdEqualTo(unsubscribe_fixedCourt);
+		
+		af7service.updateByExampleSelective(af7record , af7example);
+		
+		//插入退场申请表
+		ApplyUnsubscribeTable6 record = new ApplyUnsubscribeTable6();
+		record.setUserId(user_id);
+		record.setBookId(unsubscribe_fixedCourt);
+		record.setReason(reason);
+		record.setUnsubscribeState(3);
+		
+		return au6service.insertSelective(record);
+	}
+	
+	//用户自身查表
+	 /*
+	  *用户根据固定场编号 获取 该申请更换固定场
+	  *返回null为无效查找
+	  */
+	 @RequestMapping("/ApplyChangeFixedCourtByUser")
+	 @ResponseBody
+	 public Object ApplyChangeFixedCourtByUser(int user_id,int book_id) {
+	  ApplyChangeTable8Example example = new ApplyChangeTable8Example(); 
+	  ApplyChangeTable8Example.Criteria criteria = example.createCriteria(); 
+	  criteria.andUserIdEqualTo(user_id);
+	  criteria.andBookIdEqualTo(book_id);
+	  
+/*	  List<ApplyChangeTable8> list = ac8service.selectByExample(example);
+	  if(list.isEmpty()) {
+	   return null;
+	  }
+	  return list; */
+	  return ac8service.selectByExample(example);
+	 }
+	 
+	 /*
+	  *用户根据固定场编号 获取 该申请退场更换固定场
+	  *返回null为无效查找
+	  */
+	 @RequestMapping("/ApplyUnsubscribeFixedCourtByUser")
+	 @ResponseBody
+	 public Object ApplyUnsubscribeFixedCourtByUser(int user_id,int book_id) {
+	  ApplyUnsubscribeTable6Example example = new ApplyUnsubscribeTable6Example();
+	  ApplyUnsubscribeTable6Example.Criteria criteria = example.createCriteria(); 
+	  criteria.andUserIdEqualTo(user_id);
+	  criteria.andBookIdEqualTo(book_id);
+	  
+	  List <ApplyUnsubscribeTable6> list = au6service.selectByExample(example); 
+	  if(list.isEmpty()) {
+	   return null;
+	  }
+	  return list.get(0); 
+	 }
+	 //////////////////////////
+	////////////////////////////////////////
+	
+	/*(弃用)
+	 * 审核申请更换固定场的列表
+	 */
+//	@RequestMapping("/reviewChangeFixedCourtList")
+//	@ResponseBody
+//	public Object reviewChangeFixedCourtList() {
+//		ApplyFixedTable7Example example = new ApplyFixedTable7Example();
+//		ApplyFixedTable7Example.Criteria criteria = example.createCriteria();
+//		criteria.andApplyStateEqualTo(3);//3:换场未审核
+//		return af7service.selectByExample(example);
+//	}
+	/*
+	 *根据申请固定场表主键id获取该固定场项 
+	 */
+	@RequestMapping("/ApplyFixedbyPrimaryId")
+	@ResponseBody
+	public Object ApplyFixedbyPrimaryId(int PrimaryId) {		
+		ApplyFixedTable7Example example = new ApplyFixedTable7Example();
+		example.createCriteria().andApplyFixedIdEqualTo(PrimaryId);
+		List<ApplyFixedTable7> list = af7service.selectByExample(example);
+		if(list.isEmpty()) {
+			return null;
+		}else {
+			return list.get(0);
+		}
 	}
 	
 	/*
-	 * 审核申请更换固定场的列表
+	 *获取申请固定场的列表
+	 *通过状态来查询
+	 *-1:则获取全部
 	 */
-	@RequestMapping("/reviewChangeFixedCourtList")
+	@RequestMapping("/ApplyFixedCourtList")
 	@ResponseBody
-	public Object reviewChangeFixedCourtList() {
+	public Object ApplyFixedCourtList(int state) {
 		ApplyFixedTable7Example example = new ApplyFixedTable7Example();
-		ApplyFixedTable7Example.Criteria criteria = example.createCriteria();
-		criteria.andApplyStateEqualTo(3);//3:换场未审核
+		if(state != -1) {
+			example.createCriteria().andApplyStateEqualTo(state);
+		}
 		return af7service.selectByExample(example);
+	}
+	
+	/*
+	 *获取申请更换固定场的列表
+	 *通过状态来查询
+	 *-1:则获取全部
+	 */
+	@RequestMapping("/ApplyChangeFixedCourtList")
+	@ResponseBody
+	public Object ApplyChangeFixedCourtList(int state) {
+		ApplyChangeTable8Example example = new ApplyChangeTable8Example();	
+		if(state != -1) {
+			example.createCriteria().andApplyStateEqualTo(state);
+		}
+		return ac8service.selectByExample(example);
+	}
+	
+	/*
+	 * 获取申请退场更换固定场的列表
+	 *通过状态来查询
+	 *-1:则获取全部
+	 */
+	@RequestMapping("/ApplyUnsubscribeFixedCourtList")
+	@ResponseBody
+	public Object ApplyUnsubscribeFixedCourtList(int state) {
+		ApplyUnsubscribeTable6Example example = new ApplyUnsubscribeTable6Example();
+		if(state != -1) {
+			example.createCriteria().andUnsubscribeStateEqualTo(state);
+		}
+		return au6service.selectByExample(example);
 	}
 	
 	/*

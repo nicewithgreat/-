@@ -1,0 +1,31 @@
+<l-form name="changecourt" l-form-btn-class="l-form-btn-class" bind:linsubmit="submit">
+<l-dialog />
+    <l-form-item label="时间段：" name="time" label-placement="row">
+        <l-radio-group current="{{time}}" id="time" placement="row">
+            <l-radio key="1" disabled="{{disabled}}">
+                17:30-19:30
+            </l-radio>
+            <text decode="{{true}}">&nbsp;</text>
+            <l-radio key="2" disabled="{{disabled}}">
+                19:30-22:00
+            </l-radio>
+        </l-radio-group>
+    </l-form-item>
+
+    <l-form-item label="场地号：" name="court">
+    <l-input id="court" value="{{courtname}}" hide-label show-row="{{false}}" disabled="{{disabled}}" placeholder="一号场到八号场" />
+    </l-form-item>
+     <view>
+     <text decode="{{true}}">&nbsp;&nbsp;&nbsp;</text>
+     </view>
+
+    <l-toast />
+
+    <view slot="submit" wx:if="{{commit}}">
+        <l-button>提交</l-button>
+    </view>
+    <view slot="reset" wx:if="{{commit}}">
+        <l-button type="default" plain>重置</l-button>
+    </view>
+    
+</l-form>

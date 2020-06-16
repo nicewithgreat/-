@@ -120,6 +120,7 @@ public class UserTable2Controller {
 		if(!ut2service.selectByExample(example).isEmpty()) {			
 			UserTable2 record = new UserTable2();
 			record.setProperty("∆’Õ®”√ªß¥˝…Û∫À");
+			record.setTeamId(team_id);
 			return ut2service.updateByExampleSelective(record , example);
 		}
 		return 0;

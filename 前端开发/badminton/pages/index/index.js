@@ -5,8 +5,11 @@ const app = getApp()
 Page({
     data:{
         todaycourt:'',
-        tcourt1:'',
-        tcourt2:''
+        tcourt1:'',   //塑胶场地数组列表
+        tcourt2:'',    //水泥场地数组列表   
+        disabled:false ,
+        history:'',
+        booking:''
     },
     //确认框，跳转订场
     showDialog(e) {
@@ -31,6 +34,9 @@ Page({
                 if (res.confirm) {
                     //调用后台函数把信息写入数据库
                     console.log('用户点击了确定')
+                    that.setData({
+                        disabled:true
+                    })
                     that.bookTodayFreeCourt(todaycourtid)
                 } else if (res.cancel) {
                     console.log('用户点击了取消')
@@ -38,13 +44,77 @@ Page({
             }
         })
     },
+    //下拉刷新
+    onPullDownRefresh:function(){
+        wx.showNavigationBarLoading() //在标题栏中显示加载
+        //模拟加载
+        setTimeout(function(){
+        // complete
+        wx.hideNavigationBarLoading() //完成停止加载
+        wx.stopPullDownRefresh() //停止下拉刷新
+        },1500);
+        //this.getTodayCourt() 
+        //this.getMyHistoryInfo()
+        this.setdata()
+        //this.checktime()
     
-    onLoad:function(){
-        this.getTodayCourt()
-        
     },
-    //将todaycourt列表转为tcourt1，tcourt2两个列表
-    tdcourt:function(){
+    onLoad:function(){
+        //this.checktime()
+        this.getTodayCourt()  
+        this.getMyHistoryInfo()
+    },
+    onShow:function(){
+        this.setdata()
+    },
+    //判断当前时间是否在中午12点之前
+    checktime:function(){
+        var that =this
+        //获取当前时间,判断是否在中午12点之前
+        var dayTime = time.formatTime(new Date());
+        var d=dayTime.split(" ")[1].split(":")   
+        console.log(parseInt(d[0]))
+        if(parseInt(d[0])<12){
+            that.setData({
+                disabled:true
+            })
+        }
+    },
+    //获取当日订场信息
+    getTodayCourt:function(){
+        var that=this
+        wx.request({
+            url: 'http://127.0.0.1:8080/booking/getTodayCourtWithOtherInfo',
+            data: {
+
+            },
+            header: {
+                'content-type': 'application/json'
+            },
+            success: function (res) {
+                console.log(res.data);
+                getApp().globalData.todaycourt = res.data;
+                that.changeDate()             
+            }
+        });
+    },
+    //将当日订场信息数据中的时间戳转为正常日期
+    changeDate:function(){
+        this.setData({
+            todaycourt:getApp().globalData.todaycourt,
+        })
+        var data = this.data.todaycourt;
+        for (var i = 0; i < data.length; i++) {      
+            data[i].scheduledTimeTable1.starttime = time.formatTimeTwo(data[i].scheduledTimeTable1.starttime,'h:m') 
+            data[i].scheduledTimeTable1.endtime = time.formatTimeTwo(data[i].scheduledTimeTable1.endtime,'h:m')     
+        }
+        this.setData({
+            todaycourt: data
+        })
+        this.tdcourt()
+    },
+     //将todaycourt列表转为tcourt1，tcourt2两个列表
+     tdcourt:function(){
         var todaycourt=getApp().globalData.todaycourt
         var tcourt1=[
             {   courtname:'塑胶一号场',   courtid:1,   time1:1,   time2:2,   state1:'',   state2:''   },
@@ -62,30 +132,84 @@ Page({
             tcourt1[i].state1=todaycourt[i].courtState
             tcourt1[i].state2=todaycourt[i+8].courtState
             tcourt2[i].state1=todaycourt[i+4].courtState
-            tcourt2[i].state2=todaycourt[i+4].courtState
+            tcourt2[i].state2=todaycourt[i+12].courtState
         }
         console.log(tcourt1)
         console.log(tcourt2)
+      
         this.setData({
             tcourt1:tcourt1,
-            tcourt2:tcourt2
+            tcourt2:tcourt2,
         })
-
+        this.checktime()
+         
+        
     },
-    //将当日订场信息数据中的时间戳转为正常日期
-    changeDate:function(){
-        this.setData({
-            todaycourt:getApp().globalData.todaycourt,
-        })
-        var data = this.data.todaycourt;
-        for (var i = 0; i < data.length; i++) {      
-            data[i].scheduledTimeTable1.starttime = time.formatTimeTwo(data[i].scheduledTimeTable1.starttime,'h:m') 
-            data[i].scheduledTimeTable1.endtime = time.formatTimeTwo(data[i].scheduledTimeTable1.endtime,'h:m')     
+    //获取用户历史订场信息
+    getMyHistoryInfo: function () {
+        var that=this
+        wx.request({
+        url: 'http://127.0.0.1:8080/booking/getMyHistoryInfo',
+        data: {
+            user_id: getApp().globalData.userInfo.userId,
+        },
+        header: {
+            'content-type': 'application/json'
+        },
+        success: function (res) {
+            console.log(res.data);
+            getApp().globalData.history = res.data
+            that.changehistoryDate()
         }
+        });
+    },
+    //将历史信息数据中的时间戳转为正常日期
+    changehistoryDate:function(){
         this.setData({
-            todaycourt: data
+            history:getApp().globalData.history,
         })
-        this.tdcourt()
+        var data = this.data.history;
+        for (var i = 0; i < data.length; i++) {      
+            data[i].bookDate = time.formatTimeTwo(data[i].bookDate,'Y/M/D h:m:s')      
+        }
+        
+        var dayTime = time.formatTime(new Date());
+        var d=dayTime.split(" ")[0].split("/")   
+        var book=''   
+        for(var i=0;i<data.length;i++){
+            var h=data[i].bookDate.split(" ")[0].split("/")
+            //console.log(h)
+            if(h[0]==d[0] && h[1]==d[1] && h[2]==d[2]){
+                
+                book=data[i]
+                console.log(book)
+                //that.book(book)
+            }       
+        }
+        
+        if(book!=''){
+            if(book.bookState!=1){
+                this.setData({
+                    history: data,
+                    booking:book,
+                    disabled:true
+                })
+            }else{
+                this.setData({
+                    history: data,
+                    booking:book,
+                    disabled:false
+                })
+            }
+        }else{
+            this.setData({
+                history: data,
+                booking:book,
+                disabled:false
+            })
+        }
+        this.checktime()
+        
     },
     //预订当日空闲场地
     bookTodayFreeCourt:function(todaycourtid){
@@ -101,31 +225,75 @@ Page({
             },
             success: function (res) {
                 console.log(res.data);
-                that.setdata()
+                that.setdata()             
             }
         });
     },
     //重置数据
-    setdata:function(){
+    setdata:function(){       
         this.getTodayCourt()
+        this.getMyHistoryInfo()   
     },
-    //获取当日订场信息
-    getTodayCourt:function(){
+    //退场事件
+    exitcourt:function(e){
         var that=this
-        wx.request({
-            url: 'http://127.0.0.1:8080/booking/getTodayCourtWithOtherInfo',
-            data: {
-            //user_id:'6',
-            // wechatNO: username
-            },
-            header: {
-                'content-type': 'application/json'
-            },
-            success: function (res) {
-                console.log(res.data);
-                getApp().globalData.todaycourt = res.data;
-                that.changeDate()
+        var bookId=e.currentTarget.dataset.bookid
+        wx.lin.showDialog({
+            type: "confirm",
+            title: "退场",
+            content: "您确定要退掉这个场地吗？",
+            success: (res) => {
+                if (res.confirm) {
+                    //调用后台函数把信息写入数据库
+                    console.log('用户点击了确定')
+                    that.toexitcourt(bookId)
+                } else if (res.cancel) {
+                    console.log('用户点击了取消')
+                }
             }
-        });
+        })
     },
+    //跳转退场界面
+    toexitcourt:function(bookId){
+        wx.navigateTo({
+            url: '/pages/exitcourt/exitcourt?bookid='+bookId
+        })
+    },
+    //换场事件
+    changecourt:function(e){
+        var that=this
+        var bookId=e.currentTarget.dataset.bookid
+        console.log(bookId)
+        var timeId=e.currentTarget.dataset.timeid
+        var courtId=e.currentTarget.dataset.courtid
+        var todaycourt=getApp().globalData.todaycourt
+        var todaycourtid=''
+        for(var i=0;i<todaycourt.length;i++){
+            if(timeId==todaycourt[i].timeId && courtId==todaycourt[i].courtId){
+                todaycourtid=todaycourt[i].todayCourtId
+            }
+        }
+        wx.lin.showDialog({
+            type: "confirm",
+            title: "换场",
+            content: "您确定要换掉这个场地吗？",
+            success: (res) => {
+                if (res.confirm) {
+                    //调用后台函数把信息写入数据库
+                    console.log('用户点击了确定')
+                    that.tochangecourt(bookId,todaycourtid,timeId,courtId)
+                    //that.applyChangeTodayCourt(bookId,todaycourtid)
+                } else if (res.cancel) {
+                    console.log('用户点击了取消')
+                }
+            }
+        })
+    },
+    //跳转换场界面
+    tochangecourt:function(bookId,todaycourtid,timeId,courtId){
+        wx.navigateTo({
+            url: '/pages/changecourt/changecourt?bookid='+bookId+"&todaycourid="+todaycourtid+"&timeid="+timeId+"&courtid="+courtId
+        })
+    },
+    
 })

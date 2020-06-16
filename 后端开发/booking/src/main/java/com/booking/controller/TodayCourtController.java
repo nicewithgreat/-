@@ -78,7 +78,7 @@ public class TodayCourtController {
 		TodayCourtTable5Example tc5example = new TodayCourtTable5Example();
 		
 		TodayCourtTable5Example.Criteria tc5Criteria = tc5example.createCriteria();  
-		tc5Criteria.andCourtIdEqualTo(todayCache.getCourtId());
+		tc5Criteria.andTodayCourtIdEqualTo(todayCourt_id);
 		tc5Criteria.andCourtStateEqualTo(0);
 
 		//更新当天订场信息
@@ -146,7 +146,8 @@ public class TodayCourtController {
 		criteria.andUserIdEqualTo(user_id);
 		criteria.andBookStateEqualTo(0);
 		
-		ScheduledTimeTable1 item = st1service.getItem(tc5service.getTodayCourtByID(back_todayCourtId).getTimeId());//back_timeid
+		//ScheduledTimeTable1 item = st1service.getItem(tc5service.getTodayCourtByID(back_todayCourtId).getTimeId());//back_timeid
+		ScheduledTimeTable1 item = st1service.getScheduledMap().get(tc5service.getTodayCourtByID(back_todayCourtId).getTimeId());///??????
 		//判断是否在可修改的时间段内；
 //		System.out.println("0"+st1service.concatTodayDate(item.getStarttime()));//error
 //		System.out.println("0"+st1service.concatTodayDate(item.getEndtime()));//error
@@ -239,7 +240,8 @@ public class TodayCourtController {
 		//判断是否是当天订的场
 		if(bh4List.get(0).getBookDate().after(todayzero())) {
 			//获取当天场次map
-			ScheduledTimeTable1 item = st1service.getItem(tc5service.getTodayCourtByID(bh4List.get(0).getTimeId()).getTimeId());//back_timeid
+			ScheduledTimeTable1 item = st1service.getScheduledMap().get(bh4List.get(0).getTimeId());
+			//ScheduledTimeTable1 item = st1service.getItem(tc5service.getTodayCourtByID(bh4List.get(0).getTimeId()).getTimeId());//back_timeid
 						
 			//判断现在时间是否超过了所订场
 			Date now = new Date();
@@ -249,7 +251,7 @@ public class TodayCourtController {
 					return changeCourtOperate(user_id,book_id,back_todayCourtId,change_todayCourtId) + 2;//+2
 				}else {
 					//更新历史订场记录状态为 2(换场待审核)
-					setBookHistoryState(user_id,2);
+					setBookHistoryState(book_id,2);
 					
 					ApplyChangeTable8 record = new ApplyChangeTable8();
 					record.setUserId(user_id);
@@ -296,14 +298,15 @@ public class TodayCourtController {
 		if(bh4List.get(0).getBookDate().after(todayzero())) {			
 			//获取当天场次map
 			
-			ScheduledTimeTable1 item = st1service.getItem(tc5service.getTodayCourtByID(bh4List.get(0).getTimeId()).getTimeId());//back_timeid
+			ScheduledTimeTable1 item = st1service.getScheduledMap().get(bh4List.get(0).getTimeId());
+			//ScheduledTimeTable1 item = st1service.getItem(tc5service.getTodayCourtByID(bh4List.get(0).getTimeId()).getTimeId());//back_timeid
 			
 			//判断现在是否超过了所订场 时间段的前两个小时
 //			System.out.println(st1service.concatTodayDate(item.getStarttime()));
 //			System.out.println(new Date(new Date().getTime() + 7200000));
 			if(st1service.concatTodayDate(item.getStarttime()).after(new Date(new Date().getTime() + 7200000))) {//7200000两个小时
 				//更新历史订场记录状态为 3(退场待审核)
-				setBookHistoryState(user_id,3);
+				setBookHistoryState(book_id,3);
 				
 				//在有效时间内就插入申请退场表				
 				ApplyUnsubscribeTable6 record = new ApplyUnsubscribeTable6();
@@ -375,11 +378,12 @@ public class TodayCourtController {
 	 * 3(退场待审核);
 	 * }
 	 */
-	private int setBookHistoryState(int user_id,int state) {		
+	private int setBookHistoryState(int book_id,int state) {		
 		BookHistoryTable4 record = new BookHistoryTable4();
 		record.setBookState(state);
 		BookHistoryTable4Example example = new BookHistoryTable4Example();
-		example.createCriteria().andUserIdEqualTo(user_id);
+		//example.createCriteria().andUserIdEqualTo(user_id);
+		example.createCriteria().andBookIdEqualTo(book_id);
 		
 		return bh4service.updateByExampleSelective(record, example);
 	}
