@@ -18,20 +18,20 @@
   },
   "tabBar": {
     "color": "#ccc",
-    "selectedColor": "#ff4c91",
+    "selectedColor": "#0e3cb9",
     "borderStyle": "white",
     "backgroundColor": "#fff",
     "list": [{
         "pagePath": "pages/index/index",
-        "iconPath": "images/badminton.jpg",
-        "selectedIconPath": "images/badminton.jpg",
-        "text": "订场"
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home_select.png",
+        "text": "主页"
       },
       {
         "pagePath": "pages/information/information",
-        "iconPath": "images/me.jpg",
-        "selectedIconPath": "images/me.jpg",
-        "text": "我"
+        "iconPath": "images/name.png",
+        "selectedIconPath": "images/name_select.png",
+        "text": "个人中心"
       }
     ]
 
